@@ -1,1 +1,479 @@
-ho
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siksha-Flow | Home - Rahul Sha...</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #e8f5e9; display: flex; min-height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 230px; min-width: 230px; background: #fff; display: flex; flex-direction: column;
+    padding: 18px 0; box-shadow: 2px 0 8px rgba(0,0,0,0.06); position: fixed; top: 0; left: 0; height: 100vh; z-index: 100;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; padding: 0 20px 22px 20px; }
+  .logo-icon { width: 38px; height: 38px; }
+  .logo-text { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .nav-item {
+    display: flex; align-items: center; gap: 12px; padding: 11px 22px;
+    color: #444; font-size: 15px; cursor: pointer; text-decoration: none;
+    border-radius: 10px; margin: 2px 10px; transition: background 0.15s;
+  }
+  .nav-item:hover { background: #e8f5e9; color: #2e7d32; }
+  .nav-item.active { background: #c8e6c9; color: #2e7d32; font-weight: 600; }
+  .nav-item svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .nav-logout { margin-top: auto; }
+
+  /* MAIN */
+  .main-wrap { margin-left: 230px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+  .top-header {
+    background: #fff; padding: 14px 28px; display: flex; align-items: center; gap: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50;
+  }
+  .avatar { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; background: #c8e6c9; }
+  .avatar-placeholder {
+    width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg,#81c784,#388e3c);
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; font-weight: 700; flex-shrink: 0;
+  }
+  .header-title { font-size: 22px; font-weight: 700; color: #1a1a2e; flex: 1; }
+  .logout-btn {
+    display: flex; align-items: center; gap: 6px; color: #444; font-size: 14px; cursor: pointer;
+    text-decoration: none; border: none; background: none; font-family: inherit;
+  }
+  .logout-btn:hover { color: #c62828; }
+
+  .content { display: flex; gap: 20px; padding: 22px 24px; flex: 1; }
+  .center-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+
+  /* STUDY GOAL */
+  .study-goal {
+    background: linear-gradient(135deg, #e3f0ff 0%, #d4ecd4 100%);
+    border-radius: 16px; padding: 22px 24px; display: flex; align-items: center; gap: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  .goal-left { flex: 1; }
+  .goal-title { font-size: 18px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; }
+  .progress-bar-bg { background: #b2dfdb; border-radius: 8px; height: 12px; width: 100%; margin-bottom: 8px; }
+  .progress-bar-fill { background: linear-gradient(90deg,#43a047,#66bb6a); border-radius: 8px; height: 12px; width: 75%; }
+  .goal-sub { font-size: 13px; color: #444; }
+  .goal-right { text-align: right; }
+  .focus-btn {
+    background: #2e7d32; color: #fff; border: none; border-radius: 24px; padding: 11px 22px;
+    font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;
+    text-decoration: none; white-space: nowrap;
+  }
+  .focus-btn:hover { background: #1b5e20; }
+  .goal-time { font-size: 13px; color: #555; margin-top: 8px; }
+
+  /* SECTIONS */
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .section-title { font-size: 17px; font-weight: 700; color: #1a1a2e; }
+  .view-all { font-size: 13px; color: #2e7d32; text-decoration: none; font-weight: 600; }
+  .view-all:hover { text-decoration: underline; }
+
+  /* CLASS CARDS */
+  .cards-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .class-card {
+    background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    position: relative; transition: box-shadow 0.15s;
+  }
+  .class-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.13); }
+  .card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 10px; }
+  .card-menu { position: absolute; top: 12px; right: 12px; color: #aaa; cursor: pointer; font-size: 18px; line-height: 1; }
+  .card-name { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 2px; }
+  .card-prog-label { font-size: 12px; color: #666; margin-bottom: 5px; }
+  .card-bar-bg { background: #e0e0e0; border-radius: 6px; height: 5px; margin-bottom: 6px; }
+  .card-bar-fill { background: #43a047; border-radius: 6px; height: 5px; }
+  .card-teacher { font-size: 11px; color: #888; }
+
+  /* EBOOKS */
+  .ebooks-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .ebook-card {
+    background: #fff; border-radius: 14px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    display: flex; flex-direction: column; align-items: center; text-align: center; transition: box-shadow 0.15s;
+  }
+  .ebook-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.13); }
+  .ebook-cover {
+    width: 80px; height: 100px; border-radius: 8px; object-fit: cover; margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; color: #fff;
+  }
+  .ebook-title { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 2px; }
+  .ebook-sub { font-size: 11px; color: #888; margin-bottom: 10px; }
+  .read-btn {
+    background: #2e7d32; color: #fff; border: none; border-radius: 20px; padding: 7px 18px;
+    font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;
+  }
+  .read-btn:hover { background: #1b5e20; }
+  .ebook-prog-bar-bg { background: #e0e0e0; border-radius: 6px; height: 4px; width: 100%; margin-top: 8px; }
+  .ebook-prog-bar-fill { background: #43a047; border-radius: 6px; height: 4px; }
+
+  /* RIGHT SIDEBAR */
+  .right-col { width: 280px; min-width: 280px; display: flex; flex-direction: column; gap: 18px; }
+
+  /* USID CARD */
+  .usid-card {
+    background: #fff; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  .usid-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 14px; }
+  .usid-profile { display: flex; align-items: center; gap: 12px; }
+  .usid-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg,#81c784,#388e3c); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; font-weight: 700; flex-shrink: 0; }
+  .usid-name { font-size: 15px; font-weight: 700; color: #1a1a2e; }
+  .usid-id { font-size: 12px; color: #666; }
+  .usid-blockchain { font-size: 11px; color: #999; }
+
+  /* BADGES */
+  .badges-section { margin-top: 14px; }
+  .badges-title { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; }
+  .badges-row { display: flex; gap: 10px; }
+  .badge { display: flex; align-items: center; gap: 6px; background: #fff9c4; border-radius: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600; color: #555; border: 1px solid #f0e68c; }
+  .badge.green { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
+  .badge-icon { font-size: 16px; }
+
+  /* SKILL MATRIX */
+  .skill-card { background: #fff; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .skill-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+  .radar-wrap { display: flex; justify-content: center; }
+
+  /* ALERTS */
+  .alerts-card { background: #fff; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .alerts-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+  .alert-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .alert-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+  .alert-dot.red { background: #e53935; }
+  .alert-dot.orange { background: #fb8c00; }
+  .alert-text { font-size: 13px; color: #333; font-weight: 600; line-height: 1.3; }
+  .alert-time { font-size: 11px; color: #999; margin-top: 2px; }
+
+  /* VOICE TUTOR */
+  .voice-tutor {
+    position: fixed; bottom: 24px; right: 24px; width: 220px;
+    background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    padding: 0; overflow: hidden; z-index: 200;
+  }
+  .vt-header { background: #1a237e; color: #fff; padding: 12px 14px; display: flex; align-items: center; gap: 8px; }
+  .vt-bot { font-size: 22px; }
+  .vt-title { font-size: 13px; font-weight: 700; }
+  .vt-body { padding: 10px 12px; display: flex; align-items: center; gap: 6px; }
+  .vt-input {
+    flex: 1; border: 1px solid #e0e0e0; border-radius: 20px; padding: 7px 12px;
+    font-size: 12px; outline: none; color: #888;
+  }
+  .vt-send { background: #1a237e; color: #fff; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+  /* BG DECORATIONS */
+  .bg-gear { position: fixed; opacity: 0.07; z-index: 0; pointer-events: none; }
+
+  /* Leaf decorations bottom left */
+  .leaf-deco { position: fixed; bottom: 0; left: 230px; opacity: 0.18; pointer-events: none; z-index: 0; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="20" fill="#e8f5e9"/>
+      <path d="M8 28 Q14 10 20 18 Q26 26 32 10" stroke="#2e7d32" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="20" cy="20" r="5" fill="#43a047"/>
+    </svg>
+    <span class="logo-text">Siksha-Flow</span>
+  </div>
+
+  <a class="nav-item active" href="https://gooo26.github.io/Siksha-Flow/Hone">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Home
+  </a>
+  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/My Classes">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+    My Classes
+  </a>
+  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/E-Books">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+    E-Books
+  </a>
+  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/Smart Notes">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h12v-2H3v2zm0-5h12v-2H3v2zm0-7v2h12V6H3zm14 9.5V16h-2v1.5l3 3 3-3V16h-2v1.5l-1 1-1-1z"/></svg>
+    Smart Notes
+  </a>
+  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/Focus Mode">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm-7.53 4.74l-1.41.7C3.7 16.08 3 14.13 3 12s.7-4.08 2.06-5.44l1.41.7c-1.19 1.12-1.87 2.62-1.87 4.74s.68 3.62 1.87 4.74zm15.06-.74l1.41-.7C22.3 7.92 22 8.87 22 12s-.7 4.08-2.06 5.44l-1.41-.7c1.19-1.12 1.87-2.62 1.87-4.74s-.68-3.62-1.87-4.74z"/></svg>
+    Focus Mode
+  </a>
+  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/Student ID (USID)">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 2.75c1.24 0 2.25 1.01 2.25 2.25s-1.01 2.25-2.25 2.25S9.75 10.24 9.75 9 10.76 6.75 12 6.75zM17 17H7v-1.5c0-1.67 3.33-2.5 5-2.5s5 .83 5 2.5V17z"/></svg>
+    Student ID (USID)
+  </a>
+  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/Career Hub">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.23.18-.46.18-.7 0-1.3-1.03-2.3-2.3-2.3-.8 0-1.46.4-1.87 1.02L12 6.03l-1.83-2C9.76 3.4 9.1 3 8.3 3 7.03 3 6 4 6 5.3c0 .24.11.47.18.7H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+    Career Hub
+  </a>
+  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/Settings">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+    Settings
+  </a>
+
+  <div style="flex:1"></div>
+
+  <a class="nav-item nav-logout" href="https://gooo26.github.io/Siksha-Flow/Login">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+    Log Out
+  </a>
+</aside>
+
+<!-- MAIN WRAPPER -->
+<div class="main-wrap">
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="avatar-placeholder">R</div>
+    <span class="header-title">Welcome to your Virtual Bag, Rahul! (Grade 8)</span>
+    <a class="logout-btn" href="https://gooo26.github.io/Siksha-Flow/Login">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+      Log Out
+    </a>
+  </header>
+
+  <div class="content">
+    <div class="center-col">
+
+      <!-- STUDY GOAL -->
+      <div class="study-goal">
+        <div class="goal-left">
+          <div class="goal-title">Today's Study Goal</div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
+          <div class="goal-sub">Science: Chapter 4 (75% Complete)</div>
+        </div>
+        <div class="goal-right">
+          <a class="focus-btn" href="https://gooo26.github.io/Siksha-Flow/Focus Mode">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            Start Focus Mode
+          </a>
+          <div class="goal-time">45:00 mins, (study 00:00)</div>
+        </div>
+      </div>
+
+      <!-- ACTIVE CLASSES -->
+      <div>
+        <div class="section-header">
+          <span class="section-title">Active Classes</span>
+          <a class="view-all" href="https://gooo26.github.io/Siksha-Flow/My Classes">View all</a>
+        </div>
+        <div class="cards-row">
+          <!-- Maths -->
+          <div class="class-card">
+            <span class="card-menu">⋮</span>
+            <div class="card-icon" style="background:#e8f5e9;">
+              <svg width="26" height="26" viewBox="0 0 40 40"><rect x="4" y="4" width="14" height="14" rx="3" fill="#43a047"/><rect x="22" y="4" width="14" height="14" rx="3" fill="#81c784"/><rect x="4" y="22" width="14" height="14" rx="3" fill="#a5d6a7"/><rect x="22" y="22" width="14" height="14" rx="3" fill="#2e7d32"/></svg>
+            </div>
+            <div class="card-name">Maths</div>
+            <div class="card-prog-label">Progress (75%)</div>
+            <div class="card-bar-bg"><div class="card-bar-fill" style="width:75%"></div></div>
+            <div class="card-teacher">Maths (Ms. Priya)</div>
+          </div>
+          <!-- Science -->
+          <div class="class-card">
+            <span class="card-menu">⋮</span>
+            <div class="card-icon" style="background:#f3e5f5;">
+              <svg width="26" height="26" viewBox="0 0 40 40"><circle cx="20" cy="20" r="8" fill="#ab47bc"/><ellipse cx="20" cy="20" rx="18" ry="6" stroke="#ce93d8" stroke-width="2.5" fill="none"/><ellipse cx="20" cy="20" rx="18" ry="6" stroke="#ce93d8" stroke-width="2.5" fill="none" transform="rotate(60 20 20)"/><ellipse cx="20" cy="20" rx="18" ry="6" stroke="#ce93d8" stroke-width="2.5" fill="none" transform="rotate(-60 20 20)"/></svg>
+            </div>
+            <div class="card-name">Science</div>
+            <div class="card-prog-label">Progress (75%)</div>
+            <div class="card-bar-bg"><div class="card-bar-fill" style="width:75%"></div></div>
+            <div class="card-teacher">Science (Mr. Sharma)</div>
+          </div>
+          <!-- Hindi -->
+          <div class="class-card">
+            <span class="card-menu">⋮</span>
+            <div class="card-icon" style="background:#fff3e0; font-size:15px; font-weight:800; color:#e65100;">
+              भदी
+            </div>
+            <div class="card-name">Hindi</div>
+            <div class="card-prog-label">Progress</div>
+            <div class="card-bar-bg"><div class="card-bar-fill" style="width:40%"></div></div>
+            <div class="card-teacher">Hindi (Ms. Parma)</div>
+          </div>
+          <!-- English -->
+          <div class="class-card">
+            <span class="card-menu">⋮</span>
+            <div class="card-icon" style="background:#e3f2fd;">
+              <svg width="26" height="26" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="#1976d2" stroke-width="3"/><ellipse cx="20" cy="20" rx="7" ry="14" fill="none" stroke="#1976d2" stroke-width="2.5"/><line x1="6" y1="20" x2="34" y2="20" stroke="#1976d2" stroke-width="2.5"/><line x1="8" y1="12" x2="32" y2="12" stroke="#1976d2" stroke-width="2"/><line x1="8" y1="28" x2="32" y2="28" stroke="#1976d2" stroke-width="2"/></svg>
+            </div>
+            <div class="card-name">English</div>
+            <div class="card-prog-label">Progress</div>
+            <div class="card-bar-bg"><div class="card-bar-fill" style="width:55%"></div></div>
+            <div class="card-teacher">Englishs (Mr. Toma)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MY EBOOKS -->
+      <div>
+        <div class="section-header">
+          <span class="section-title">My E-Books</span>
+          <a class="view-all" href="https://gooo26.github.io/Siksha-Flow/E-Books">View All</a>
+        </div>
+        <div class="ebooks-row">
+          <!-- NCERT Science -->
+          <div class="ebook-card">
+            <div class="ebook-cover" style="background:linear-gradient(135deg,#2e7d32,#66bb6a); width:80px; height:100px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-direction:column; margin-bottom:10px;">
+              <div style="font-size:9px; color:#c8e6c9; font-weight:600; margin-bottom:2px;">NCERT GRADE 8</div>
+              <div style="font-size:24px;">🔬</div>
+              <div style="font-size:14px; font-weight:800; color:#fff; margin-top:2px;">SCIENCE</div>
+            </div>
+            <div class="ebook-title">NCERT Grade 8</div>
+            <div class="ebook-sub">Science</div>
+            <a class="read-btn" href="https://gooo26.github.io/Siksha-Flow/E-Books">Read Now</a>
+            <div class="ebook-prog-bar-bg"><div class="ebook-prog-bar-fill" style="width:70%"></div></div>
+            <div style="font-size:11px;color:#888;margin-top:4px;">Progress</div>
+          </div>
+          <!-- Mathematics -->
+          <div class="ebook-card">
+            <div class="ebook-cover" style="background:linear-gradient(135deg,#1565c0,#42a5f5); width:80px; height:100px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-direction:column; margin-bottom:10px;">
+              <div style="font-size:9px; color:#bbdefb; font-weight:600; margin-bottom:2px;">NCERT GRADE 8</div>
+              <div style="font-size:18px; color:#fff; font-weight:800;">∑∫</div>
+              <div style="font-size:11px; font-weight:800; color:#fff; margin-top:2px;">MATHEMATICS</div>
+            </div>
+            <div class="ebook-title">Mathematics</div>
+            <div class="ebook-sub">Recent</div>
+            <a class="read-btn" href="https://gooo26.github.io/Siksha-Flow/E-Books">Read Now</a>
+            <div class="ebook-prog-bar-bg"><div class="ebook-prog-bar-fill" style="width:50%"></div></div>
+            <div style="font-size:11px;color:#888;margin-top:4px;">Progress</div>
+          </div>
+          <!-- History -->
+          <div class="ebook-card">
+            <div class="ebook-cover" style="background:linear-gradient(135deg,#bf360c,#ff7043); width:80px; height:100px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-direction:column; margin-bottom:10px;">
+              <div style="font-size:9px; color:#ffccbc; font-weight:600; margin-bottom:2px;">NCERT GRADE 8</div>
+              <div style="font-size:20px;">🏛️</div>
+              <div style="font-size:13px; font-weight:800; color:#fff; margin-top:2px;">HISTORY</div>
+            </div>
+            <div class="ebook-title">History</div>
+            <div class="ebook-sub">History</div>
+            <a class="read-btn" href="https://gooo26.github.io/Siksha-Flow/E-Books">Read Now</a>
+            <div class="ebook-prog-bar-bg"><div class="ebook-prog-bar-fill" style="width:35%"></div></div>
+            <div style="font-size:11px;color:#888;margin-top:4px;">Progress</div>
+          </div>
+          <!-- Hindi -->
+          <div class="ebook-card">
+            <div class="ebook-cover" style="background:linear-gradient(135deg,#e65100,#ffa726); width:80px; height:100px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-direction:column; margin-bottom:10px;">
+              <div style="font-size:9px; color:#ffe0b2; font-weight:600; margin-bottom:2px;">NCERT GRADE 8</div>
+              <div style="font-size:16px; font-weight:800; color:#fff; margin-top:4px;">सोंदी</div>
+            </div>
+            <div class="ebook-title">Hindi</div>
+            <div class="ebook-sub">Hindi</div>
+            <a class="read-btn" href="https://gooo26.github.io/Siksha-Flow/E-Books">Read Now</a>
+            <div class="ebook-prog-bar-bg"><div class="ebook-prog-bar-fill" style="width:60%"></div></div>
+            <div style="font-size:11px;color:#888;margin-top:4px;">Progress</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- end center-col -->
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+
+      <!-- USID CARD -->
+      <div class="usid-card">
+        <div class="usid-title">Unified Student ID (USID)</div>
+        <div class="usid-profile">
+          <div class="usid-avatar">R</div>
+          <div>
+            <div class="usid-name">Rahul K. Sharma</div>
+            <div class="usid-id">USID: SF7483-9210-4567</div>
+            <div class="usid-blockchain">12-Digit Blockchain ID</div>
+          </div>
+        </div>
+
+        <!-- BADGES -->
+        <div class="badges-section">
+          <div class="badges-title">Badges</div>
+          <div class="badges-row">
+            <div class="badge">
+              <span class="badge-icon">⭐</span> Science Star
+            </div>
+            <div class="badge green">
+              <span class="badge-icon">📅</span>
+              <span>100 Days<br>Attendance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILL MATRIX -->
+      <div class="skill-card">
+        <div class="skill-title">Skill Matrix</div>
+        <div class="radar-wrap">
+          <svg width="230" height="200" viewBox="0 0 230 200">
+            <!-- Labels -->
+            <text x="115" y="16" text-anchor="middle" font-size="11" fill="#555">Coding</text>
+            <text x="210" y="100" text-anchor="start" font-size="11" fill="#555">Arts</text>
+            <text x="170" y="188" text-anchor="middle" font-size="11" fill="#555">Sports</text>
+            <text x="58" y="188" text-anchor="middle" font-size="11" fill="#555">Leadership</text>
+            <text x="14" y="100" text-anchor="start" font-size="11" fill="#555">Sports</text>
+
+            <!-- Pentagon grid lines -->
+            <!-- Outer -->
+            <polygon points="115,26 198,82 168,176 62,176 32,82" fill="none" stroke="#ddd" stroke-width="1"/>
+            <!-- Middle -->
+            <polygon points="115,51 166,91 146,151 84,151 64,91" fill="none" stroke="#ddd" stroke-width="1"/>
+            <!-- Inner -->
+            <polygon points="115,76 134,100 125,126 105,126 96,100" fill="none" stroke="#ddd" stroke-width="1"/>
+
+            <!-- Filled radar -->
+            <polygon points="115,46 178,88 155,168 75,168 52,88" fill="#a5d6a7" opacity="0.7" stroke="#43a047" stroke-width="2"/>
+
+            <!-- Dots on radar -->
+            <circle cx="115" cy="46" r="4" fill="#2e7d32"/>
+            <circle cx="178" cy="88" r="4" fill="#2e7d32"/>
+            <circle cx="155" cy="168" r="4" fill="#2e7d32"/>
+            <circle cx="75" cy="168" r="4" fill="#2e7d32"/>
+            <circle cx="52" cy="88" r="4" fill="#2e7d32"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ALERTS -->
+      <div class="alerts-card">
+        <div class="alerts-title">Alerts/Notices</div>
+        <div class="alert-item">
+          <div class="alert-dot red"></div>
+          <div>
+            <div class="alert-text">Science Project due: Friday</div>
+            <div class="alert-time">28 hours ago</div>
+          </div>
+        </div>
+        <div class="alert-item">
+          <div class="alert-dot orange"></div>
+          <div>
+            <div class="alert-text">Science Project</div>
+            <div class="alert-time">25 hours ago</div>
+          </div>
+        </div>
+        <div class="alert-item">
+          <div class="alert-dot red"></div>
+          <div>
+            <div class="alert-text">Science Project</div>
+            <div class="alert-time">24 hours ago</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end right-col -->
+  </div><!-- end content -->
+</div><!-- end main-wrap -->
+
+<!-- VOICE TUTOR AI -->
+<div class="voice-tutor">
+  <div class="vt-header">
+    <span class="vt-bot">🤖</span>
+    <span class="vt-title">Voice Tutor AI</span>
+  </div>
+  <div class="vt-body">
+    <input class="vt-input" type="text" placeholder="Ask AI">
+    <button class="vt-send">➤</button>
+  </div>
+</div>
+
+</body>
+</html>
