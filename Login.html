@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Siksha-Flow | Virtual Bag Login</title>
-  <!-- Google Fonts for clean, modern typography -->
+  <title>Siksha-Flow | Virtual Bag Login (Transparent + Landscape)</title>
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <!-- Font Awesome 6 (free icons) -->
+  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -15,129 +15,159 @@
       box-sizing: border-box;
     }
 
+    /* Landscape & Desktop-First: full viewport, robust alignment */
     body {
-      background: linear-gradient(145deg, #e9f0fc 0%, #dbe6f2 100%);
+      background-image: url('https://gooo26.github.io/Siksha-Flow/IMG_20260503_230140.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 2rem;
+      /* fallback + subtle dark overlay for readability */
+      background-color: #2c3e4e;
     }
 
-    /* main card container */
-    .login-container {
-      max-width: 540px;
+    /* Enhanced overlay for text clarity without losing transparency effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Main container - landscape friendly, wider but elegant */
+    .login-container {
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ========== TRANSPARENT CARD (Glassmorphism) ========== */
+    .card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      width: 100%;
+      max-width: 520px;
       margin: 0 auto;
     }
 
-    .card {
-      background: #ffffff;
-      border-radius: 2rem;
-      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-
     .card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-5px);
+      box-shadow: 0 28px 45px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.25);
     }
 
-    /* inner padding */
+    /* inner spacing */
     .card-inner {
-      padding: 2rem 2rem 2rem 2rem;
+      padding: 2.2rem 2rem 2.2rem 2rem;
     }
 
-    /* header section */
-    .logo-header {
-      text-align: center;
-      margin-bottom: 1.8rem;
-    }
-
+    /* header & text with white/dark contrast for transparency */
     .logo-header h1 {
-      font-size: 2rem;
-      font-weight: 700;
+      font-size: 2.1rem;
+      font-weight: 800;
       letter-spacing: -0.3px;
-      background: linear-gradient(135deg, #1E3C72, #2A5298);
+      background: linear-gradient(135deg, #FFFFFF, #E0F0FF);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
       margin-bottom: 0.5rem;
     }
 
     .tagline {
-      font-size: 0.9rem;
-      color: #5b7aa2;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.9);
       font-weight: 500;
-      border-top: 1px solid #e9edf2;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
       display: inline-block;
       padding-top: 0.5rem;
-    }
-
-    .welcome-text {
-      text-align: center;
-      margin-bottom: 1.8rem;
+      backdrop-filter: blur(2px);
     }
 
     .welcome-text h2 {
-      font-size: 1.55rem;
-      font-weight: 600;
-      color: #1f2a44;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
     }
 
     .welcome-text p {
-      font-size: 0.85rem;
-      color: #6c7a91;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
       margin-top: 6px;
+      font-weight: 500;
     }
 
-    /* form groups */
-    .input-group {
-      margin-bottom: 1.5rem;
-    }
-
+    /* form groups with transparent inputs */
     .input-group label {
       display: flex;
       align-items: center;
       gap: 8px;
       font-weight: 600;
       font-size: 0.85rem;
-      color: #1e2f41;
+      color: #FFFFFF;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
       margin-bottom: 0.5rem;
     }
 
     .input-group label i {
-      color: #2a5298;
-      font-size: 0.9rem;
+      color: #FFE6C7;
     }
 
     .input-field {
       width: 100%;
       padding: 0.9rem 1rem;
-      border: 1.5px solid #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.5);
       border-radius: 1.2rem;
       font-size: 0.95rem;
       font-weight: 500;
       font-family: 'Inter', monospace;
       transition: all 0.2s;
-      background: #fefefe;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
       outline: none;
-      color: #0a1c2f;
+      color: #FFFFFF;
+    }
+
+    .input-field::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 400;
     }
 
     .input-field:focus {
-      border-color: #2a5298;
-      box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.15);
+      border-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.3);
     }
 
     .hint-text {
-      font-size: 0.7rem;
-      color: #7d8eaa;
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.8);
       margin-top: 6px;
       margin-left: 6px;
       font-family: monospace;
-      letter-spacing: 0.3px;
     }
 
     .forgot-link {
@@ -148,19 +178,20 @@
 
     .forgot-link a {
       font-size: 0.8rem;
-      color: #2a5298;
+      color: #FFEEDD;
       text-decoration: none;
       font-weight: 500;
       transition: 0.2s;
       cursor: pointer;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
 
     .forgot-link a:hover {
       text-decoration: underline;
-      color: #0e3570;
+      color: #FFFFFF;
     }
 
-    /* login button */
+    /* login button - solid with gradient for contrast */
     .login-btn {
       width: 100%;
       background: linear-gradient(98deg, #1e3c72, #2a5298);
@@ -172,7 +203,7 @@
       border-radius: 2rem;
       cursor: pointer;
       transition: all 0.25s;
-      box-shadow: 0 6px 14px rgba(42, 82, 152, 0.25);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
       font-family: 'Inter', sans-serif;
       margin-bottom: 1rem;
       display: flex;
@@ -184,7 +215,7 @@
     .login-btn:hover {
       background: linear-gradient(98deg, #14315c, #1f4280);
       transform: scale(0.98);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     .or-divider {
@@ -198,30 +229,32 @@
     .or-divider::after {
       content: '';
       flex: 1;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     }
 
     .or-divider span {
       padding: 0 12px;
       font-size: 0.8rem;
-      font-weight: 500;
-      color: #8a99b4;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
       text-transform: uppercase;
     }
 
-    /* SSO Section */
+    /* SSO Section - transparent glass effect */
     .sso-section {
-      background: #f8fafd;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
       border-radius: 1.5rem;
       padding: 1.2rem 1rem;
       margin-top: 0.25rem;
       margin-bottom: 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
     .sso-title {
       font-weight: 700;
       font-size: 0.9rem;
-      color: #1e2f44;
+      color: #FFFFFF;
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
@@ -238,51 +271,54 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      background: white;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
       padding: 0.65rem 1rem;
       border-radius: 1.2rem;
-      border: 1px solid #e9edf4;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       transition: 0.15s;
       cursor: pointer;
     }
 
     .sso-item:hover {
-      background: #ffffff;
-      border-color: #b9ceff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      background: rgba(255, 255, 255, 0.35);
+      border-color: rgba(255, 255, 255, 0.7);
     }
 
     .sso-item i {
       width: 24px;
       font-size: 1.2rem;
-      color: #2a5298;
+      color: #FFEEDD;
     }
 
     .sso-item span {
       font-size: 0.9rem;
       font-weight: 500;
-      color: #1c2e46;
+      color: #FFFFFF;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.1);
     }
 
     .ibm-badge {
       margin-top: 1rem;
       font-size: 0.7rem;
-      background: #eef3fc;
+      background: rgba(0, 77, 140, 0.7);
       padding: 0.5rem 0.8rem;
       border-radius: 30px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: #004d8c;
+      color: #FFFFFF;
       font-weight: 500;
       width: auto;
       cursor: pointer;
+      backdrop-filter: blur(4px);
     }
 
-    /* Help AI section */
+    /* Help AI section - transparent style */
     .help-ai {
       margin-top: 1.8rem;
-      background: #f1f5fe;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
       border-radius: 1.5rem;
       padding: 0.9rem 1.2rem;
       display: flex;
@@ -290,6 +326,7 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
     .help-left {
@@ -300,7 +337,7 @@
     }
 
     .help-icon {
-      background: #2a5298;
+      background: rgba(42, 82, 152, 0.85);
       border-radius: 50%;
       width: 36px;
       height: 36px;
@@ -314,35 +351,41 @@
     .help-text {
       font-weight: 600;
       font-size: 0.85rem;
-      color: #102b47;
+      color: #FFFFFF;
     }
 
     .help-sub {
-      font-size: 0.75rem;
-      color: #4f6f9f;
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.85);
     }
 
     .voice-ai {
-      background: white;
+      background: rgba(255, 255, 255, 0.3);
       border-radius: 2rem;
       padding: 0.5rem 1rem;
       font-size: 0.8rem;
       font-weight: 500;
-      color: #1e3c72;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      color: #FFFFFF;
       display: flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid #dce5f0;
+      border: 1px solid rgba(255,255,255,0.4);
       cursor: pointer;
       transition: 0.1s;
     }
 
     .voice-ai:hover {
-      background: #eef3ff;
+      background: rgba(255, 255, 255, 0.5);
     }
 
-    /* custom popup (login success popup) */
+    footer {
+      text-align: center;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 1rem;
+    }
+
+    /* success popup remains solid (better visibility) */
     .success-popup {
       position: fixed;
       top: 50%;
@@ -394,50 +437,25 @@
       transition: width 1.8s linear;
     }
 
-    /* modal overlay background for popup */
     .popup-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(3px);
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
       z-index: 10000;
     }
 
-    /* responsive */
-    @media (max-width: 500px) {
-      .card-inner {
-        padding: 1.5rem;
-      }
-      .welcome-text h2 {
-        font-size: 1.3rem;
-      }
-      .help-ai {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .voice-ai {
-        align-self: flex-start;
-      }
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.7rem;
-      color: #7c8aa3;
-      margin-top: 1rem;
-    }
-
-    /* Simple modal styling for forget password and extra links */
+    /* modal for forgot password (solid for usability) */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       backdrop-filter: blur(3px);
       display: flex;
       align-items: center;
@@ -462,12 +480,6 @@
     .modal-content h3 {
       font-size: 1.4rem;
       color: #1e3c72;
-      margin-bottom: 0.8rem;
-    }
-    .modal-content p {
-      color: #2c3e66;
-      margin: 1rem 0;
-      line-height: 1.4;
     }
     .modal-input {
       width: 100%;
@@ -475,7 +487,6 @@
       border-radius: 1rem;
       border: 1.5px solid #e2e8f0;
       margin: 0.5rem 0;
-      font-size: 0.9rem;
     }
     .modal-btn {
       background: #2a5298;
@@ -491,7 +502,25 @@
     .close-modal {
       background: #eef2f9;
       color: #1f2f4e;
-      margin-top: 0.5rem;
+    }
+
+    /* landscape-first adjustments: for desktops make card breathe but keep narrow enough */
+    @media (min-width: 1200px) {
+      .login-container {
+        max-width: 1300px;
+      }
+      .card {
+        max-width: 550px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+      .card-inner {
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -499,94 +528,63 @@
 <div class="login-container">
   <div class="card">
     <div class="card-inner">
-      <!-- Siksha-Flow branding -->
       <div class="logo-header">
         <h1>Siksha-Flow</h1>
-        <div class="tagline"><i class="fas fa-graduation-cap" style="margin-right: 6px;"></i> Unified Education Gateway</div>
+        <div class="tagline"><i class="fas fa-graduation-cap"></i> Unified Education Gateway</div>
       </div>
-
       <div class="welcome-text">
         <h2>Welcome to Siksha-Flow</h2>
         <p>Login to Your Virtual Bag</p>
       </div>
 
-      <!-- Login Form with functional Login & Forgot Password -->
       <form id="loginForm" action="javascript:void(0);">
         <div class="input-group">
           <label><i class="fas fa-id-card"></i> Username / Unified Student ID (USID)</label>
           <input type="text" class="input-field" id="usid" placeholder="SF-XXXX-XXXX-XXXX" value="SF-2025-AB12-7890">
           <div class="hint-text">Format: SF-XXXX-XXXX-XXXX</div>
         </div>
-
         <div class="input-group">
           <label><i class="fas fa-lock"></i> Password</label>
           <input type="password" class="input-field" id="password" placeholder="••••••••">
         </div>
-
         <div class="forgot-link">
           <a href="#" id="forgotPasswordLink"><i class="fas fa-key"></i> Forgot Password?</a>
         </div>
-
         <button type="submit" class="login-btn" id="loginBtn">
           <i class="fas fa-arrow-right-to-bracket"></i> Log In
         </button>
       </form>
 
-      <div class="or-divider">
-        <span>or</span>
-      </div>
+      <div class="or-divider"><span>or</span></div>
 
-      <!-- Single Sign-On (SSO) exactly as original -->
       <div class="sso-section">
-        <div class="sso-title">
-          <i class="fas fa-fingerprint"></i> Single Sign-On (SSO)
-        </div>
+        <div class="sso-title"><i class="fas fa-fingerprint"></i> Single Sign-On (SSO)</div>
         <div class="sso-options">
-          <div class="sso-item" id="ssoSchool">
-            <i class="fas fa-school"></i>
-            <span>Log in with School Account</span>
-          </div>
-          <div class="sso-item" id="ssoStateBoard">
-            <i class="fas fa-diploma"></i>
-            <span>Log in with State Board ID</span>
-          </div>
-          <div class="sso-item" id="ssoGovId">
-            <i class="fas fa-id-card"></i>
-            <span>Log in with Government ID</span>
-          </div>
+          <div class="sso-item" id="ssoSchool"><i class="fas fa-school"></i><span>Log in with School Account</span></div>
+          <div class="sso-item" id="ssoStateBoard"><i class="fas fa-diploma"></i><span>Log in with State Board ID</span></div>
+          <div class="sso-item" id="ssoGovId"><i class="fas fa-id-card"></i><span>Log in with Government ID</span></div>
         </div>
-        <div class="ibm-badge" id="ibmBadge">
-          <i class="fab fa-ibm"></i> IBM Secured & Verifiable (Unified Profile)
-        </div>
+        <div class="ibm-badge" id="ibmBadge"><i class="fab fa-ibm"></i> IBM Secured & Verifiable (Unified Profile)</div>
       </div>
 
-      <!-- Get Help AI + Voice Help AI -->
       <div class="help-ai">
         <div class="help-left" id="getHelpAi">
-          <div class="help-icon">
-            <i class="fas fa-robot"></i>
-          </div>
-          <div>
-            <div class="help-text">Get Help AI</div>
-            <div class="help-sub">Instant assistance 24/7</div>
-          </div>
+          <div class="help-icon"><i class="fas fa-robot"></i></div>
+          <div><div class="help-text">Get Help AI</div><div class="help-sub">Instant assistance 24/7</div></div>
         </div>
         <div class="voice-ai" id="voiceHelpBtn">
           <i class="fas fa-microphone-alt"></i> Voice Help AI
-          <span style="font-size: 0.7rem; margin-left: 5px;">|</span>
-          <span id="voiceSampleText" style="font-weight: normal;">Tell me your login issue (e.g., USID reset)</span>
+          <span style="font-size:0.7rem;">|</span>
+          <span id="voiceSampleText">Tell me your login issue (e.g., USID reset)</span>
         </div>
       </div>
-      <footer>
-        <i class="fas fa-shield-alt"></i> Secure & verifiable ecosystem
-      </footer>
+      <footer><i class="fas fa-shield-alt"></i> Secure & verifiable ecosystem</footer>
     </div>
   </div>
 </div>
 
 <script>
   (function() {
-    // Helper: toast messages for errors/info (non-blocking)
     function showToast(title, msg, isError = false) {
       const toast = document.createElement('div');
       toast.style.position = 'fixed';
@@ -605,7 +603,6 @@
       toast.style.zIndex = '9999';
       toast.style.maxWidth = '90%';
       toast.style.textAlign = 'center';
-      toast.style.backdropFilter = 'blur(8px)';
       toast.innerHTML = `<strong>${title}</strong><br>${msg}`;
       document.body.appendChild(toast);
       setTimeout(() => {
@@ -615,172 +612,94 @@
       }, 3000);
     }
 
-    // ----- LOGIN SUCCESS POPUP + REDIRECT to SPECIFIED URL (https://gooo26.github.io/Siksha-Flow/Home) -----
-    // And the popup shows "Welcome" instead of previous "gio.com" reference.
     function showLoginSuccessAndRedirect(usidValue) {
-      // Create overlay and custom success popup
       const overlay = document.createElement('div');
       overlay.className = 'popup-overlay';
       const popup = document.createElement('div');
       popup.className = 'success-popup';
-      // Popup content: "Welcome" mention and redirect notice to the new link.
       popup.innerHTML = `
         <i class="fas fa-check-circle"></i>
         <h3>Welcome!</h3>
         <p>Welcome back, <strong>${escapeHtml(usidValue)}</strong><br>Redirecting to your Siksha-Flow Home...</p>
         <div class="popup-progress"><div class="popup-progress-bar" id="redirectProgressBar"></div></div>
-        <small style="color:#6c86a3;">Siksha-Flow Dashboard</small>
+        <small>Siksha-Flow Dashboard</small>
       `;
       overlay.appendChild(popup);
       document.body.appendChild(overlay);
-      
-      // Animate progress bar
       const progressBar = document.getElementById('redirectProgressBar');
-      if (progressBar) {
-        setTimeout(() => {
-          progressBar.style.width = '100%';
-        }, 50);
-      }
-      
-      // REDIRECT TO: https://gooo26.github.io/Siksha-Flow/Home  (as requested)
-      const redirectUrl = 'https://gooo26.github.io/Siksha-Flow/Home';
-      setTimeout(() => {
-        window.location.href = redirectUrl;
-      }, 2000);
+      if (progressBar) setTimeout(() => progressBar.style.width = '100%', 50);
+      setTimeout(() => { window.location.href = 'https://gooo26.github.io/Siksha-Flow/Home'; }, 2000);
     }
     
-    // simple escape helper
     function escapeHtml(str) {
       if (!str) return '';
       return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
+        if(m === '&') return '&amp;';
+        if(m === '<') return '&lt;';
+        if(m === '>') return '&gt;';
         return m;
       });
     }
     
-    // ---------- LOGIN VALIDATION ----------
     const loginBtn = document.getElementById('loginBtn');
     const usidInput = document.getElementById('usid');
     const pwdInput = document.getElementById('password');
-    
     function performLogin() {
       const usidVal = usidInput.value.trim();
       const pwdVal = pwdInput.value;
-      if (!usidVal) {
-        showToast('❌ Login Failed', 'Please enter your Unified Student ID (USID).', true);
-        return;
-      }
-      if (!pwdVal) {
-        showToast('🔒 Password Missing', 'Please enter your password to access Virtual Bag.', true);
-        return;
-      }
-      // If both fields are non-empty => SUCCESS: show popup with Welcome message + redirect to target URL.
+      if (!usidVal) { showToast('❌ Login Failed', 'Please enter your Unified Student ID (USID).', true); return; }
+      if (!pwdVal) { showToast('🔒 Password Missing', 'Please enter your password.', true); return; }
       showLoginSuccessAndRedirect(usidVal);
     }
+    loginBtn.addEventListener('click', (e) => { e.preventDefault(); performLogin(); });
+    document.getElementById('loginForm').addEventListener('submit', (e) => { e.preventDefault(); performLogin(); });
     
-    loginBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      performLogin();
-    });
-    
-    const loginForm = document.getElementById('loginForm');
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      performLogin();
-    });
-    
-    // ---------- FORGOT PASSWORD: FULLY FUNCTIONAL MODAL ----------
     const forgotLink = document.getElementById('forgotPasswordLink');
-    
     function openForgotModal() {
       const modalDiv = document.createElement('div');
       modalDiv.className = 'modal-overlay';
       modalDiv.id = 'forgotModal';
       modalDiv.innerHTML = `
         <div class="modal-content">
-          <i class="fas fa-lock" style="font-size: 2rem; color:#2a5298; margin-bottom: 0.5rem;"></i>
+          <i class="fas fa-lock" style="font-size:2rem; color:#2a5298;"></i>
           <h3>Reset Password</h3>
-          <p>Enter your USID or registered email to receive reset instructions.</p>
-          <input type="text" id="resetUsid" class="modal-input" placeholder="SF-XXXX-XXXX-XXXX or Email" autocomplete="off">
-          <button id="sendResetLinkBtn" class="modal-btn"><i class="fas fa-paper-plane"></i> Send Reset Link</button>
-          <button id="closeResetModal" class="modal-btn close-modal"><i class="fas fa-times"></i> Cancel</button>
-        </div>
-      `;
+          <p>Enter USID or email</p>
+          <input type="text" id="resetUsid" class="modal-input" placeholder="SF-XXXX-XXXX-XXXX or Email">
+          <button id="sendResetLinkBtn" class="modal-btn">Send Reset Link</button>
+          <button id="closeResetModal" class="modal-btn close-modal">Cancel</button>
+        </div>`;
       document.body.appendChild(modalDiv);
-      
       const sendBtn = document.getElementById('sendResetLinkBtn');
       const closeBtn = document.getElementById('closeResetModal');
       const resetInput = document.getElementById('resetUsid');
-      
-      function closeModal() {
-        const modal = document.getElementById('forgotModal');
-        if (modal) modal.remove();
-      }
-      
+      function closeModal() { document.getElementById('forgotModal')?.remove(); }
       sendBtn.addEventListener('click', () => {
-        const inputVal = resetInput.value.trim();
-        if (!inputVal) {
-          alert('Please provide your USID or registered email address.');
-          return;
-        }
-        showToast('📧 Password Reset', `Reset link sent to ${inputVal} (demo). Check your inbox.`, false);
+        const val = resetInput.value.trim();
+        if(!val) { alert('Provide USID or email'); return; }
+        showToast('📧 Password Reset', `Reset link sent to ${val}`, false);
         closeModal();
       });
-      
       closeBtn.addEventListener('click', closeModal);
-      modalDiv.addEventListener('click', (e) => {
-        if (e.target === modalDiv) closeModal();
-      });
+      modalDiv.addEventListener('click', (e) => { if(e.target === modalDiv) closeModal(); });
     }
+    if(forgotLink) forgotLink.addEventListener('click', (e) => { e.preventDefault(); openForgotModal(); });
     
-    if (forgotLink) {
-      forgotLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        openForgotModal();
-      });
-    }
-    
-    // ------------- SSO mock (demo) -------------
-    function ssoMock(provider) {
-      showToast('🔐 SSO Redirect', `Redirecting to ${provider} authentication gateway... (Demo simulation)`, false);
-    }
+    function ssoMock(provider) { showToast('🔐 SSO Redirect', `${provider} (Demo)`, false); }
     document.getElementById('ssoSchool')?.addEventListener('click', () => ssoMock('School Account'));
     document.getElementById('ssoStateBoard')?.addEventListener('click', () => ssoMock('State Board ID'));
     document.getElementById('ssoGovId')?.addEventListener('click', () => ssoMock('Government ID'));
-    
-    // IBM badge click
-    const ibmBadge = document.getElementById('ibmBadge');
-    if (ibmBadge) {
-      ibmBadge.addEventListener('click', () => {
-        showToast('🔒 IBM Verifiable Credentials', 'Unified profile secured with IBM Blockchain & verifiable trust.', false);
-      });
-    }
-    
-    // Help AI click
-    const helpAi = document.getElementById('getHelpAi');
-    if (helpAi) {
-      helpAi.addEventListener('click', () => {
-        showToast('🤖 Siksha-Flow AI Help', 'Need assistance? Reset USID, recover password, or check SSO status.', false);
-      });
-    }
-    
-    // Voice Help AI interactive
+    document.getElementById('ibmBadge')?.addEventListener('click', () => showToast('IBM Verifiable', 'Unified profile secured', false));
+    document.getElementById('getHelpAi')?.addEventListener('click', () => showToast('🤖 Help AI', 'Reset USID or password', false));
     const voiceBtn = document.getElementById('voiceHelpBtn');
     const sampleSpan = document.getElementById('voiceSampleText');
-    if (voiceBtn) {
-      voiceBtn.addEventListener('click', () => {
-        showToast('🎙️ Voice Help AI', 'Listening... "Tell me your login issue (e.g., USID reset)". For USID reset, click "Forgot Password".', false);
-        if (sampleSpan) {
-          const original = sampleSpan.innerText;
-          sampleSpan.innerText = '🔊 "Try resetting via Forgot Password"';
-          setTimeout(() => {
-            sampleSpan.innerText = original;
-          }, 2800);
-        }
-      });
-    }
+    voiceBtn?.addEventListener('click', () => {
+      showToast('🎙️ Voice Help AI', 'Try "Forgot Password" for USID reset', false);
+      if(sampleSpan) {
+        const orig = sampleSpan.innerText;
+        sampleSpan.innerText = '🔊 "Reset via Forgot Password"';
+        setTimeout(() => sampleSpan.innerText = orig, 2500);
+      }
+    });
   })();
 </script>
 </body>
