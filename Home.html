@@ -2,478 +2,1912 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Siksha-Flow | Home - Rahul Sha...</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Siksha-Flow | Virtual Bag</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', sans-serif; background: #e8f5e9; display: flex; min-height: 100vh; }
+:root {
+  --green: #1a7a4a;
+  --green-light: #2ecc71;
+  --green-pale: #e8f7ef;
+  --green-mid: #c2ecd7;
+  --accent: #f39c12;
+  --accent2: #e74c3c;
+  --bg: #f0faf5;
+  --card: #ffffff;
+  --text: #1a2e22;
+  --muted: #6b8f79;
+  --border: #d4edd9;
+  --sidebar-w: 220px;
+  --header-h: 60px;
+  --nav-h: 64px;
+  --radius: 16px;
+  --shadow: 0 4px 20px rgba(26,122,74,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  max-width: 430px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-  /* SIDEBAR */
-  .sidebar {
-    width: 230px; min-width: 230px; background: #fff; display: flex; flex-direction: column;
-    padding: 18px 0; box-shadow: 2px 0 8px rgba(0,0,0,0.06); position: fixed; top: 0; left: 0; height: 100vh; z-index: 100;
-  }
-  .logo { display: flex; align-items: center; gap: 10px; padding: 0 20px 22px 20px; }
-  .logo-icon { width: 38px; height: 38px; }
-  .logo-text { font-size: 20px; font-weight: 700; color: #1a1a2e; }
-  .nav-item {
-    display: flex; align-items: center; gap: 12px; padding: 11px 22px;
-    color: #444; font-size: 15px; cursor: pointer; text-decoration: none;
-    border-radius: 10px; margin: 2px 10px; transition: background 0.15s;
-  }
-  .nav-item:hover { background: #e8f5e9; color: #2e7d32; }
-  .nav-item.active { background: #c8e6c9; color: #2e7d32; font-weight: 600; }
-  .nav-item svg { width: 20px; height: 20px; flex-shrink: 0; }
-  .nav-logout { margin-top: auto; }
+/* ===== SCREENS ===== */
+.screen { display: none; flex-direction: column; min-height: 100vh; }
+.screen.active { display: flex; }
 
-  /* MAIN */
-  .main-wrap { margin-left: 230px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
-  .top-header {
-    background: #fff; padding: 14px 28px; display: flex; align-items: center; gap: 16px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50;
-  }
-  .avatar { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; background: #c8e6c9; }
-  .avatar-placeholder {
-    width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg,#81c784,#388e3c);
-    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; font-weight: 700; flex-shrink: 0;
-  }
-  .header-title { font-size: 22px; font-weight: 700; color: #1a1a2e; flex: 1; }
-  .logout-btn {
-    display: flex; align-items: center; gap: 6px; color: #444; font-size: 14px; cursor: pointer;
-    text-decoration: none; border: none; background: none; font-family: inherit;
-  }
-  .logout-btn:hover { color: #c62828; }
+/* ===== LOGIN ===== */
+#login-screen {
+  background: linear-gradient(160deg, #0d5c38 0%, #1a7a4a 40%, #27ae60 100%);
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+#login-screen::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+}
+#login-screen::after {
+  content: '';
+  position: absolute; bottom: -80px; left: -40px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+.login-logo {
+  text-align: center;
+  margin-bottom: 12px;
+  z-index: 1;
+}
+.login-logo img-placeholder {
+  display: inline-block;
+  width: 70px; height: 70px;
+  background: white;
+  border-radius: 20px;
+  font-size: 36px;
+  line-height: 70px;
+  text-align: center;
+}
+.logo-icon {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 70px; height: 70px;
+  background: white;
+  border-radius: 20px;
+  font-size: 36px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  margin-bottom: 10px;
+}
+.login-title {
+  color: white;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  z-index: 1;
+}
+.login-sub { color: rgba(255,255,255,0.75); font-size: 13px; margin-bottom: 28px; z-index:1; }
+.login-card {
+  background: white;
+  border-radius: 24px;
+  padding: 28px 24px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  z-index: 1;
+}
+.login-card h2 { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.login-card p { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+.inp-group { margin-bottom: 14px; }
+.inp-group label { font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; display: block; }
+.inp-wrap {
+  display: flex; align-items: center;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 0 14px;
+  background: var(--bg);
+  transition: border-color 0.2s;
+}
+.inp-wrap:focus-within { border-color: var(--green); }
+.inp-wrap span { font-size: 18px; margin-right: 10px; }
+.inp-wrap input {
+  flex: 1; border: none; background: transparent;
+  padding: 13px 0;
+  font-size: 14px; font-family: 'Nunito', sans-serif;
+  outline: none; color: var(--text);
+}
+.btn-login {
+  width: 100%;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  margin-top: 4px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 6px 20px rgba(26,122,74,0.35);
+  transition: transform 0.1s;
+}
+.btn-login:active { transform: scale(0.98); }
+.divider { display: flex; align-items: center; margin: 16px 0; gap: 10px; }
+.divider span { font-size: 11px; color: var(--muted); }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.sso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sso-btn {
+  display: flex; align-items: center; gap: 8px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 11px; font-weight: 700;
+  background: white; cursor: pointer;
+  color: var(--text);
+  transition: border-color 0.2s, background 0.2s;
+}
+.sso-btn:hover { border-color: var(--green); background: var(--green-pale); }
+.sso-btn.full { grid-column: 1 / -1; }
+.sso-btn .si { font-size: 16px; }
+.ibm-tag {
+  background: var(--green-pale);
+  border: 1.5px solid var(--green-mid);
+  color: var(--green);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer;
+}
+.login-footer { text-align: center; margin-top: 14px; font-size: 12px; color: var(--muted); z-index:1; }
+.login-footer a { color: var(--green-light); font-weight: 700; text-decoration: none; }
 
-  .content { display: flex; gap: 20px; padding: 22px 24px; flex: 1; }
-  .center-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+/* ===== APP SHELL ===== */
+#app-screen { background: var(--bg); position: relative; }
 
-  /* STUDY GOAL */
-  .study-goal {
-    background: linear-gradient(135deg, #e3f0ff 0%, #d4ecd4 100%);
-    border-radius: 16px; padding: 22px 24px; display: flex; align-items: center; gap: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  }
-  .goal-left { flex: 1; }
-  .goal-title { font-size: 18px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; }
-  .progress-bar-bg { background: #b2dfdb; border-radius: 8px; height: 12px; width: 100%; margin-bottom: 8px; }
-  .progress-bar-fill { background: linear-gradient(90deg,#43a047,#66bb6a); border-radius: 8px; height: 12px; width: 75%; }
-  .goal-sub { font-size: 13px; color: #444; }
-  .goal-right { text-align: right; }
-  .focus-btn {
-    background: #2e7d32; color: #fff; border: none; border-radius: 24px; padding: 11px 22px;
-    font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;
-    text-decoration: none; white-space: nowrap;
-  }
-  .focus-btn:hover { background: #1b5e20; }
-  .goal-time { font-size: 13px; color: #555; margin-top: 8px; }
+/* Header */
+.app-header {
+  position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px;
+  height: var(--header-h);
+  background: white;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 16px;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(26,122,74,0.08);
+}
+.header-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 18px; font-weight: 900; color: var(--green);
+}
+.header-logo .logo-ball {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.header-right {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 10px;
+}
+.avatar-sm {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 800; font-size: 14px;
+  cursor: pointer;
+}
+.notif-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--green-pale);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  position: relative;
+}
+.notif-dot {
+  position: absolute; top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--accent2);
+  border-radius: 50%;
+  border: 2px solid white;
+}
 
-  /* SECTIONS */
-  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-  .section-title { font-size: 17px; font-weight: 700; color: #1a1a2e; }
-  .view-all { font-size: 13px; color: #2e7d32; text-decoration: none; font-weight: 600; }
-  .view-all:hover { text-decoration: underline; }
+/* Content Area */
+.app-content {
+  margin-top: var(--header-h);
+  margin-bottom: var(--nav-h);
+  overflow-y: auto;
+  min-height: calc(100vh - var(--header-h) - var(--nav-h));
+}
 
-  /* CLASS CARDS */
-  .cards-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .class-card {
-    background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    position: relative; transition: box-shadow 0.15s;
-  }
-  .class-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.13); }
-  .card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 10px; }
-  .card-menu { position: absolute; top: 12px; right: 12px; color: #aaa; cursor: pointer; font-size: 18px; line-height: 1; }
-  .card-name { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 2px; }
-  .card-prog-label { font-size: 12px; color: #666; margin-bottom: 5px; }
-  .card-bar-bg { background: #e0e0e0; border-radius: 6px; height: 5px; margin-bottom: 6px; }
-  .card-bar-fill { background: #43a047; border-radius: 6px; height: 5px; }
-  .card-teacher { font-size: 11px; color: #888; }
+/* Bottom Nav */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px;
+  height: var(--nav-h);
+  background: white;
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  box-shadow: 0 -4px 20px rgba(26,122,74,0.08);
+}
+.nav-item {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none; background: none;
+  font-family: 'Nunito', sans-serif;
+  padding: 8px 4px;
+}
+.nav-icon { font-size: 22px; transition: transform 0.2s; }
+.nav-label { font-size: 9px; font-weight: 700; color: var(--muted); transition: color 0.2s; }
+.nav-item.active .nav-icon { transform: scale(1.15); }
+.nav-item.active .nav-label { color: var(--green); }
+.nav-item.active .nav-dot {
+  width: 4px; height: 4px;
+  background: var(--green);
+  border-radius: 50%;
+  margin-top: 2px;
+}
 
-  /* EBOOKS */
-  .ebooks-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .ebook-card {
-    background: #fff; border-radius: 14px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    display: flex; flex-direction: column; align-items: center; text-align: center; transition: box-shadow 0.15s;
-  }
-  .ebook-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.13); }
-  .ebook-cover {
-    width: 80px; height: 100px; border-radius: 8px; object-fit: cover; margin-bottom: 10px;
-    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; color: #fff;
-  }
-  .ebook-title { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 2px; }
-  .ebook-sub { font-size: 11px; color: #888; margin-bottom: 10px; }
-  .read-btn {
-    background: #2e7d32; color: #fff; border: none; border-radius: 20px; padding: 7px 18px;
-    font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;
-  }
-  .read-btn:hover { background: #1b5e20; }
-  .ebook-prog-bar-bg { background: #e0e0e0; border-radius: 6px; height: 4px; width: 100%; margin-top: 8px; }
-  .ebook-prog-bar-fill { background: #43a047; border-radius: 6px; height: 4px; }
+/* ===== PAGE SECTIONS ===== */
+.page { display: none; padding: 16px; }
+.page.active { display: block; }
 
-  /* RIGHT SIDEBAR */
-  .right-col { width: 280px; min-width: 280px; display: flex; flex-direction: column; gap: 18px; }
+/* Section headers */
+.page-header {
+  margin-bottom: 16px;
+}
+.page-header h1 {
+  font-size: 20px; font-weight: 900; color: var(--text);
+  line-height: 1.2;
+}
+.page-header p { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-  /* USID CARD */
-  .usid-card {
-    background: #fff; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  }
-  .usid-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 14px; }
-  .usid-profile { display: flex; align-items: center; gap: 12px; }
-  .usid-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg,#81c784,#388e3c); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; font-weight: 700; flex-shrink: 0; }
-  .usid-name { font-size: 15px; font-weight: 700; color: #1a1a2e; }
-  .usid-id { font-size: 12px; color: #666; }
-  .usid-blockchain { font-size: 11px; color: #999; }
+/* Cards */
+.card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 14px;
+}
+.card-title {
+  font-size: 14px; font-weight: 800; color: var(--text);
+  margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-title .view-all {
+  font-size: 11px; font-weight: 700; color: var(--green); cursor: pointer;
+}
 
-  /* BADGES */
-  .badges-section { margin-top: 14px; }
-  .badges-title { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; }
-  .badges-row { display: flex; gap: 10px; }
-  .badge { display: flex; align-items: center; gap: 6px; background: #fff9c4; border-radius: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600; color: #555; border: 1px solid #f0e68c; }
-  .badge.green { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
-  .badge-icon { font-size: 16px; }
+/* Study Goal Banner */
+.goal-banner {
+  background: linear-gradient(135deg, #e8f7ef 0%, #d0f0e0 100%);
+  border: 1.5px solid var(--green-mid);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
+}
+.goal-info h3 { font-size: 13px; font-weight: 800; color: var(--green); }
+.goal-info p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.goal-progress {
+  height: 6px; background: var(--green-mid);
+  border-radius: 3px; margin-top: 8px; width: 160px;
+}
+.goal-progress-bar {
+  height: 100%; background: linear-gradient(90deg, var(--green), var(--green-light));
+  border-radius: 3px;
+}
+.btn-focus {
+  background: var(--green);
+  color: white; border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 11px; font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 5px;
+}
 
-  /* SKILL MATRIX */
-  .skill-card { background: #fff; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
-  .skill-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
-  .radar-wrap { display: flex; justify-content: center; }
+/* USID Card */
+.usid-banner {
+  background: linear-gradient(135deg, #1a3a2a 0%, #0d5c38 100%);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+  color: white;
+}
+.usid-banner .usid-top {
+  display: flex; align-items: center; gap: 12px;
+}
+.usid-avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 900; font-size: 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+}
+.usid-info h3 { font-size: 16px; font-weight: 900; }
+.usid-info p { font-size: 10px; opacity: 0.7; font-family: monospace; margin-top: 2px; }
+.usid-badges {
+  display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
+}
+.badge-tag {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; gap: 4px;
+}
 
-  /* ALERTS */
-  .alerts-card { background: #fff; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
-  .alerts-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
-  .alert-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
-  .alert-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
-  .alert-dot.red { background: #e53935; }
-  .alert-dot.orange { background: #fb8c00; }
-  .alert-text { font-size: 13px; color: #333; font-weight: 600; line-height: 1.3; }
-  .alert-time { font-size: 11px; color: #999; margin-top: 2px; }
+/* Subject Cards */
+.subjects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.subject-card {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.subject-card:active { transform: scale(0.97); }
+.subject-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.subject-card h4 { font-size: 13px; font-weight: 800; }
+.subject-card .teacher { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.prog-bar { height: 4px; background: var(--green-pale); border-radius: 2px; margin-top: 8px; }
+.prog-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--green), var(--green-light)); }
+.prog-label { font-size: 10px; color: var(--green); font-weight: 700; margin-top: 3px; }
 
-  /* VOICE TUTOR */
-  .voice-tutor {
-    position: fixed; bottom: 24px; right: 24px; width: 220px;
-    background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-    padding: 0; overflow: hidden; z-index: 200;
-  }
-  .vt-header { background: #1a237e; color: #fff; padding: 12px 14px; display: flex; align-items: center; gap: 8px; }
-  .vt-bot { font-size: 22px; }
-  .vt-title { font-size: 13px; font-weight: 700; }
-  .vt-body { padding: 10px 12px; display: flex; align-items: center; gap: 6px; }
-  .vt-input {
-    flex: 1; border: 1px solid #e0e0e0; border-radius: 20px; padding: 7px 12px;
-    font-size: 12px; outline: none; color: #888;
-  }
-  .vt-send { background: #1a237e; color: #fff; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+/* Book Cards */
+.books-scroll {
+  display: flex; gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+.books-scroll::-webkit-scrollbar { display: none; }
+.book-card {
+  flex-shrink: 0; width: 110px;
+  text-align: center; cursor: pointer;
+}
+.book-cover {
+  width: 110px; height: 140px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: white;
+  padding: 10px; line-height: 1.3;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  margin-bottom: 6px;
+}
+.book-card .book-title { font-size: 11px; font-weight: 700; color: var(--text); }
+.book-card .book-sub { font-size: 10px; color: var(--muted); }
+.btn-read {
+  background: var(--green);
+  color: white; border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 10px; font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  margin-top: 4px;
+}
 
-  /* BG DECORATIONS */
-  .bg-gear { position: fixed; opacity: 0.07; z-index: 0; pointer-events: none; }
+/* Alerts */
+.alert-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.alert-item:last-child { border-bottom: none; }
+.alert-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.alert-text h4 { font-size: 12px; font-weight: 700; }
+.alert-text p { font-size: 10px; color: var(--muted); margin-top: 1px; }
 
-  /* Leaf decorations bottom left */
-  .leaf-deco { position: fixed; bottom: 0; left: 230px; opacity: 0.18; pointer-events: none; z-index: 0; }
+/* Skill Radar mini */
+.skill-radar { text-align: center; }
+.skill-radar canvas { max-width: 100%; }
+
+/* ===== FOCUS MODE ===== */
+.timer-display {
+  text-align: center;
+  padding: 20px 0;
+}
+.timer-num {
+  font-size: 72px; font-weight: 900; color: var(--green);
+  line-height: 1;
+  font-family: 'Poppins', sans-serif;
+}
+.timer-label { font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 2px; }
+.timer-controls { display: flex; justify-content: center; gap: 12px; margin-top: 16px; }
+.timer-btn {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: none; cursor: pointer;
+  font-size: 22px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.1s;
+}
+.timer-btn:active { transform: scale(0.93); }
+.timer-btn.primary { background: var(--green); color: white; box-shadow: 0 6px 20px rgba(26,122,74,0.4); }
+.timer-btn.secondary { background: var(--green-pale); color: var(--green); }
+.stats-row { display: flex; gap: 10px; margin-bottom: 14px; }
+.stat-box {
+  flex: 1;
+  background: white;
+  border-radius: 14px;
+  padding: 14px 12px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.stat-box .sv { font-size: 20px; font-weight: 900; color: var(--green); }
+.stat-box .sk { font-size: 10px; color: var(--muted); font-weight: 600; margin-top: 2px; }
+.sound-list { display: flex; gap: 8px; flex-wrap: wrap; }
+.sound-chip {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--green-pale);
+  border: 1.5px solid var(--green-mid);
+  border-radius: 20px;
+  padding: 7px 12px;
+  font-size: 11px; font-weight: 700; color: var(--green);
+  cursor: pointer; transition: all 0.2s;
+}
+.sound-chip.active { background: var(--green); color: white; border-color: var(--green); }
+.distraction-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+}
+.distraction-item:last-child { border: none; }
+.distraction-item span { font-size: 12px; }
+.dist-val { font-size: 12px; font-weight: 700; color: var(--green); }
+
+/* ===== CAREER HUB ===== */
+.career-path-card {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+  transition: all 0.2s;
+}
+.career-path-card:active { transform: scale(0.98); }
+.career-icon { font-size: 28px; }
+.career-info h4 { font-size: 14px; font-weight: 800; }
+.career-info p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.career-arrow { margin-left: auto; color: var(--green); font-size: 16px; }
+.readiness-gauge {
+  text-align: center; padding: 10px 0;
+}
+.gauge-num { font-size: 48px; font-weight: 900; color: var(--green); line-height: 1; }
+.gauge-label { font-size: 12px; color: var(--muted); font-weight: 600; margin-top: 4px; }
+.gauge-bar {
+  height: 10px;
+  background: var(--green-pale);
+  border-radius: 5px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+.gauge-fill {
+  height: 100%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #f39c12, #27ae60);
+  width: 75%;
+}
+.skill-bar-item { margin-bottom: 10px; }
+.skill-bar-item .sk-top { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.skill-bar-item .sk-val { color: var(--green); }
+.skill-bar-bg { height: 6px; background: var(--green-pale); border-radius: 3px; }
+.skill-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--green), var(--green-light)); }
+
+/* ===== SMART NOTES ===== */
+.note-card {
+  background: white;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+  border-left: 4px solid var(--green);
+  box-shadow: var(--shadow);
+}
+.note-card h4 { font-size: 13px; font-weight: 800; }
+.note-card .note-meta { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.note-card .note-preview { font-size: 12px; color: #444; margin-top: 8px; line-height: 1.5; }
+.note-btns { display: flex; gap: 8px; margin-top: 10px; }
+.note-btn {
+  background: var(--green-pale);
+  color: var(--green);
+  border: 1.5px solid var(--green-mid);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 11px; font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+}
+.note-btn.primary { background: var(--green); color: white; border-color: var(--green); }
+.ai-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ai-tool-btn {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 12px;
+  font-size: 12px; font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(26,122,74,0.3);
+}
+.live-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--accent2);
+  color: white;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 10px; font-weight: 800;
+}
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: white;
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ===== USID PAGE ===== */
+.id-card {
+  background: linear-gradient(135deg, #0d5c38 0%, #1a7a4a 50%, #27ae60 100%);
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.id-card::before {
+  content: '';
+  position: absolute; top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+}
+.id-top { display: flex; align-items: center; gap: 14px; }
+.id-photo {
+  width: 64px; height: 64px; border-radius: 14px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 900; color: white;
+  border: 3px solid rgba(255,255,255,0.3);
+}
+.id-details h2 { font-size: 18px; font-weight: 900; }
+.id-details p { font-size: 10px; opacity: 0.75; margin-top: 2px; }
+.id-number {
+  font-family: monospace;
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.9;
+  letter-spacing: 1px;
+}
+.id-verified {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 11px; font-weight: 700;
+  margin-top: 14px;
+}
+.id-actions { display: flex; gap: 8px; margin-top: 14px; }
+.id-action-btn {
+  flex: 1;
+  background: rgba(255,255,255,0.2);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 11px; font-weight: 800; color: white;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.linked-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.linked-item:last-child { border: none; }
+.linked-icon { font-size: 20px; }
+.linked-info h4 { font-size: 12px; font-weight: 800; }
+.linked-info p { font-size: 10px; color: var(--green); font-weight: 700; margin-top: 1px; }
+
+/* ===== SETTINGS ===== */
+.settings-section { margin-bottom: 14px; }
+.settings-section h3 { font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; padding: 0 4px; }
+.setting-item {
+  display: flex; align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 13px 14px;
+  margin-bottom: 4px;
+  box-shadow: 0 1px 6px rgba(26,122,74,0.06);
+  cursor: pointer;
+}
+.setting-icon { font-size: 18px; margin-right: 12px; }
+.setting-label { flex: 1; font-size: 13px; font-weight: 700; }
+.setting-val { font-size: 11px; color: var(--muted); }
+.setting-arrow { color: var(--muted); font-size: 14px; margin-left: 6px; }
+.toggle {
+  width: 44px; height: 24px;
+  background: var(--green);
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px;
+  background: white;
+  border-radius: 50%;
+  top: 3px; right: 3px;
+  transition: right 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.toggle.off { background: #ccc; }
+.toggle.off::after { right: calc(100% - 21px); }
+.profile-card {
+  background: linear-gradient(135deg, var(--green-pale), #d0f0e0);
+  border: 1.5px solid var(--green-mid);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 14px;
+}
+.profile-avatar {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 900; font-size: 24px;
+  border: 3px solid white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+.profile-details h2 { font-size: 16px; font-weight: 900; color: var(--text); }
+.profile-details p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.profile-details .school { font-size: 11px; color: var(--green); font-weight: 700; margin-top: 1px; }
+
+/* ===== AI VOICE BUBBLE ===== */
+.ai-bubble {
+  position: fixed;
+  bottom: calc(var(--nav-h) + 12px);
+  right: 16px;
+  z-index: 200;
+}
+.ai-bubble-btn {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a3a2a, var(--green));
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 6px 24px rgba(26,122,74,0.4);
+  transition: transform 0.2s;
+}
+.ai-bubble-btn:active { transform: scale(0.92); }
+.ai-chat-box {
+  position: absolute;
+  bottom: 64px; right: 0;
+  width: 240px;
+  background: #1a3a2a;
+  border-radius: 16px 16px 4px 16px;
+  padding: 14px;
+  display: none;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+.ai-chat-box.open { display: block; }
+.ai-chat-title { color: white; font-size: 12px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.ai-chat-inp {
+  display: flex; gap: 8px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 8px 12px;
+  align-items: center;
+}
+.ai-chat-inp input {
+  flex: 1; background: none; border: none;
+  color: white; font-size: 12px;
+  font-family: 'Nunito', sans-serif;
+  outline: none;
+}
+.ai-chat-inp input::placeholder { color: rgba(255,255,255,0.5); }
+.ai-send { background: var(--green-light); border: none; border-radius: 6px; width: 28px; height: 28px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page.active { animation: fadeIn 0.25s ease; }
+
+/* GPA Meter */
+.gpa-meter {
+  text-align: center;
+  padding: 8px 0;
+}
+.gpa-num { font-size: 42px; font-weight: 900; color: var(--green); line-height: 1; }
+.gpa-sub { font-size: 12px; color: var(--muted); font-weight: 600; }
+.meter-arc {
+  width: 120px; height: 60px;
+  margin: 0 auto 8px;
+  position: relative;
+  overflow: hidden;
+}
+.meter-arc svg { width: 120px; height: 120px; margin-top: -60px; }
+
+/* Performance table */
+.perf-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+}
+.perf-row:last-child { border: none; }
+.perf-rank { font-size: 12px; font-weight: 800; color: var(--muted); width: 20px; }
+.perf-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 800; }
+.perf-name { flex: 1; font-size: 12px; font-weight: 700; }
+.perf-score { font-size: 12px; font-weight: 800; color: var(--green); }
+
+/* Tag chips */
+.chip {
+  display: inline-flex; align-items: center;
+  background: var(--green-pale);
+  color: var(--green);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 10px; font-weight: 700;
+  margin-right: 6px; margin-bottom: 6px;
+}
+.chip.orange { background: #fff3e0; color: #e67e22; }
+.chip.red { background: #fdecea; color: var(--accent2); }
+
+/* Workshop card */
+.workshop-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px;
+  background: var(--green-pale);
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+.workshop-item h4 { font-size: 12px; font-weight: 800; }
+.workshop-item p { font-size: 10px; color: var(--muted); }
+
+/* Tabs */
+.tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.tab {
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 12px; font-weight: 700;
+  border: 1.5px solid var(--border);
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Nunito', sans-serif;
+  color: var(--text);
+}
+.tab.active { background: var(--green); color: white; border-color: var(--green); }
+
+/* Logout confirm */
+.logout-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #fdecea;
+  border: 1.5px solid #f5c6cb;
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+.logout-bar span { font-size: 13px; font-weight: 800; color: var(--accent2); }
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="logo">
-    <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
-      <circle cx="20" cy="20" r="20" fill="#e8f5e9"/>
-      <path d="M8 28 Q14 10 20 18 Q26 26 32 10" stroke="#2e7d32" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <circle cx="20" cy="20" r="5" fill="#43a047"/>
-    </svg>
-    <span class="logo-text">Siksha-Flow</span>
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="login-screen" class="screen active">
+  <div class="login-logo">
+    <div class="logo-icon">📚</div>
+    <div class="login-title">Siksha-Flow</div>
+    <div class="login-sub">Your Virtual Bag | AI-Powered Learning</div>
   </div>
-
-  <a class="nav-item active" href="https://gooo26.github.io/Siksha-Flow/Hone">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-    Home
-  </a>
-  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/My Classes">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
-    My Classes
-  </a>
-  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/E-Books">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-    E-Books
-  </a>
-  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/Smart Notes">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h12v-2H3v2zm0-5h12v-2H3v2zm0-7v2h12V6H3zm14 9.5V16h-2v1.5l3 3 3-3V16h-2v1.5l-1 1-1-1z"/></svg>
-    Smart Notes
-  </a>
-  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/Focus Mode">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm-7.53 4.74l-1.41.7C3.7 16.08 3 14.13 3 12s.7-4.08 2.06-5.44l1.41.7c-1.19 1.12-1.87 2.62-1.87 4.74s.68 3.62 1.87 4.74zm15.06-.74l1.41-.7C22.3 7.92 22 8.87 22 12s-.7 4.08-2.06 5.44l-1.41-.7c1.19-1.12 1.87-2.62 1.87-4.74s-.68-3.62-1.87-4.74z"/></svg>
-    Focus Mode
-  </a>
-  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/Student ID (USID)">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 2.75c1.24 0 2.25 1.01 2.25 2.25s-1.01 2.25-2.25 2.25S9.75 10.24 9.75 9 10.76 6.75 12 6.75zM17 17H7v-1.5c0-1.67 3.33-2.5 5-2.5s5 .83 5 2.5V17z"/></svg>
-    Student ID (USID)
-  </a>
-  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/Career Hub">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.23.18-.46.18-.7 0-1.3-1.03-2.3-2.3-2.3-.8 0-1.46.4-1.87 1.02L12 6.03l-1.83-2C9.76 3.4 9.1 3 8.3 3 7.03 3 6 4 6 5.3c0 .24.11.47.18.7H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
-    Career Hub
-  </a>
-  <a class="nav-item" href="https://gooo26.github.io/Siksha-Flow/Settings">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-    Settings
-  </a>
-
-  <div style="flex:1"></div>
-
-  <a class="nav-item nav-logout" href="https://gooo26.github.io/Siksha-Flow/Login">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
-    Log Out
-  </a>
-</aside>
-
-<!-- MAIN WRAPPER -->
-<div class="main-wrap">
-  <!-- TOP HEADER -->
-  <header class="top-header">
-    <div class="avatar-placeholder">R</div>
-    <span class="header-title">Welcome to your Virtual Bag, Rahul! (Grade 8)</span>
-    <a class="logout-btn" href="https://gooo26.github.io/Siksha-Flow/Login">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
-      Log Out
-    </a>
-  </header>
-
-  <div class="content">
-    <div class="center-col">
-
-      <!-- STUDY GOAL -->
-      <div class="study-goal">
-        <div class="goal-left">
-          <div class="goal-title">Today's Study Goal</div>
-          <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
-          <div class="goal-sub">Science: Chapter 4 (75% Complete)</div>
-        </div>
-        <div class="goal-right">
-          <a class="focus-btn" href="https://gooo26.github.io/Siksha-Flow/Focus Mode">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-            Start Focus Mode
-          </a>
-          <div class="goal-time">45:00 mins, (study 00:00)</div>
-        </div>
+  <div class="login-card">
+    <h2>Welcome Back! 👋</h2>
+    <p>Login to your Virtual Bag</p>
+    <div class="inp-group">
+      <label>Username / Unified Student ID (USID)</label>
+      <div class="inp-wrap">
+        <span>👤</span>
+        <input type="text" placeholder="SF-XXXX-XXXX-XXXX" id="login-usid">
       </div>
-
-      <!-- ACTIVE CLASSES -->
-      <div>
-        <div class="section-header">
-          <span class="section-title">Active Classes</span>
-          <a class="view-all" href="https://gooo26.github.io/Siksha-Flow/My Classes">View all</a>
-        </div>
-        <div class="cards-row">
-          <!-- Maths -->
-          <div class="class-card">
-            <span class="card-menu">⋮</span>
-            <div class="card-icon" style="background:#e8f5e9;">
-              <svg width="26" height="26" viewBox="0 0 40 40"><rect x="4" y="4" width="14" height="14" rx="3" fill="#43a047"/><rect x="22" y="4" width="14" height="14" rx="3" fill="#81c784"/><rect x="4" y="22" width="14" height="14" rx="3" fill="#a5d6a7"/><rect x="22" y="22" width="14" height="14" rx="3" fill="#2e7d32"/></svg>
-            </div>
-            <div class="card-name">Maths</div>
-            <div class="card-prog-label">Progress (75%)</div>
-            <div class="card-bar-bg"><div class="card-bar-fill" style="width:75%"></div></div>
-            <div class="card-teacher">Maths (Ms. Priya)</div>
-          </div>
-          <!-- Science -->
-          <div class="class-card">
-            <span class="card-menu">⋮</span>
-            <div class="card-icon" style="background:#f3e5f5;">
-              <svg width="26" height="26" viewBox="0 0 40 40"><circle cx="20" cy="20" r="8" fill="#ab47bc"/><ellipse cx="20" cy="20" rx="18" ry="6" stroke="#ce93d8" stroke-width="2.5" fill="none"/><ellipse cx="20" cy="20" rx="18" ry="6" stroke="#ce93d8" stroke-width="2.5" fill="none" transform="rotate(60 20 20)"/><ellipse cx="20" cy="20" rx="18" ry="6" stroke="#ce93d8" stroke-width="2.5" fill="none" transform="rotate(-60 20 20)"/></svg>
-            </div>
-            <div class="card-name">Science</div>
-            <div class="card-prog-label">Progress (75%)</div>
-            <div class="card-bar-bg"><div class="card-bar-fill" style="width:75%"></div></div>
-            <div class="card-teacher">Science (Mr. Sharma)</div>
-          </div>
-          <!-- Hindi -->
-          <div class="class-card">
-            <span class="card-menu">⋮</span>
-            <div class="card-icon" style="background:#fff3e0; font-size:15px; font-weight:800; color:#e65100;">
-              भदी
-            </div>
-            <div class="card-name">Hindi</div>
-            <div class="card-prog-label">Progress</div>
-            <div class="card-bar-bg"><div class="card-bar-fill" style="width:40%"></div></div>
-            <div class="card-teacher">Hindi (Ms. Parma)</div>
-          </div>
-          <!-- English -->
-          <div class="class-card">
-            <span class="card-menu">⋮</span>
-            <div class="card-icon" style="background:#e3f2fd;">
-              <svg width="26" height="26" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="#1976d2" stroke-width="3"/><ellipse cx="20" cy="20" rx="7" ry="14" fill="none" stroke="#1976d2" stroke-width="2.5"/><line x1="6" y1="20" x2="34" y2="20" stroke="#1976d2" stroke-width="2.5"/><line x1="8" y1="12" x2="32" y2="12" stroke="#1976d2" stroke-width="2"/><line x1="8" y1="28" x2="32" y2="28" stroke="#1976d2" stroke-width="2"/></svg>
-            </div>
-            <div class="card-name">English</div>
-            <div class="card-prog-label">Progress</div>
-            <div class="card-bar-bg"><div class="card-bar-fill" style="width:55%"></div></div>
-            <div class="card-teacher">Englishs (Mr. Toma)</div>
-          </div>
-        </div>
+    </div>
+    <div class="inp-group">
+      <label>Password</label>
+      <div class="inp-wrap">
+        <span>🔒</span>
+        <input type="password" placeholder="Enter password" id="login-pass">
       </div>
-
-      <!-- MY EBOOKS -->
-      <div>
-        <div class="section-header">
-          <span class="section-title">My E-Books</span>
-          <a class="view-all" href="https://gooo26.github.io/Siksha-Flow/E-Books">View All</a>
-        </div>
-        <div class="ebooks-row">
-          <!-- NCERT Science -->
-          <div class="ebook-card">
-            <div class="ebook-cover" style="background:linear-gradient(135deg,#2e7d32,#66bb6a); width:80px; height:100px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-direction:column; margin-bottom:10px;">
-              <div style="font-size:9px; color:#c8e6c9; font-weight:600; margin-bottom:2px;">NCERT GRADE 8</div>
-              <div style="font-size:24px;">🔬</div>
-              <div style="font-size:14px; font-weight:800; color:#fff; margin-top:2px;">SCIENCE</div>
-            </div>
-            <div class="ebook-title">NCERT Grade 8</div>
-            <div class="ebook-sub">Science</div>
-            <a class="read-btn" href="https://gooo26.github.io/Siksha-Flow/E-Books">Read Now</a>
-            <div class="ebook-prog-bar-bg"><div class="ebook-prog-bar-fill" style="width:70%"></div></div>
-            <div style="font-size:11px;color:#888;margin-top:4px;">Progress</div>
-          </div>
-          <!-- Mathematics -->
-          <div class="ebook-card">
-            <div class="ebook-cover" style="background:linear-gradient(135deg,#1565c0,#42a5f5); width:80px; height:100px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-direction:column; margin-bottom:10px;">
-              <div style="font-size:9px; color:#bbdefb; font-weight:600; margin-bottom:2px;">NCERT GRADE 8</div>
-              <div style="font-size:18px; color:#fff; font-weight:800;">∑∫</div>
-              <div style="font-size:11px; font-weight:800; color:#fff; margin-top:2px;">MATHEMATICS</div>
-            </div>
-            <div class="ebook-title">Mathematics</div>
-            <div class="ebook-sub">Recent</div>
-            <a class="read-btn" href="https://gooo26.github.io/Siksha-Flow/E-Books">Read Now</a>
-            <div class="ebook-prog-bar-bg"><div class="ebook-prog-bar-fill" style="width:50%"></div></div>
-            <div style="font-size:11px;color:#888;margin-top:4px;">Progress</div>
-          </div>
-          <!-- History -->
-          <div class="ebook-card">
-            <div class="ebook-cover" style="background:linear-gradient(135deg,#bf360c,#ff7043); width:80px; height:100px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-direction:column; margin-bottom:10px;">
-              <div style="font-size:9px; color:#ffccbc; font-weight:600; margin-bottom:2px;">NCERT GRADE 8</div>
-              <div style="font-size:20px;">🏛️</div>
-              <div style="font-size:13px; font-weight:800; color:#fff; margin-top:2px;">HISTORY</div>
-            </div>
-            <div class="ebook-title">History</div>
-            <div class="ebook-sub">History</div>
-            <a class="read-btn" href="https://gooo26.github.io/Siksha-Flow/E-Books">Read Now</a>
-            <div class="ebook-prog-bar-bg"><div class="ebook-prog-bar-fill" style="width:35%"></div></div>
-            <div style="font-size:11px;color:#888;margin-top:4px;">Progress</div>
-          </div>
-          <!-- Hindi -->
-          <div class="ebook-card">
-            <div class="ebook-cover" style="background:linear-gradient(135deg,#e65100,#ffa726); width:80px; height:100px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-direction:column; margin-bottom:10px;">
-              <div style="font-size:9px; color:#ffe0b2; font-weight:600; margin-bottom:2px;">NCERT GRADE 8</div>
-              <div style="font-size:16px; font-weight:800; color:#fff; margin-top:4px;">सोंदी</div>
-            </div>
-            <div class="ebook-title">Hindi</div>
-            <div class="ebook-sub">Hindi</div>
-            <a class="read-btn" href="https://gooo26.github.io/Siksha-Flow/E-Books">Read Now</a>
-            <div class="ebook-prog-bar-bg"><div class="ebook-prog-bar-fill" style="width:60%"></div></div>
-            <div style="font-size:11px;color:#888;margin-top:4px;">Progress</div>
-          </div>
-        </div>
+    </div>
+    <button class="btn-login" onclick="doLogin()">🔊 Log In</button>
+    <div class="divider"><span>or</span></div>
+    <p style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;text-align:center;">Single Sign-On (SSO)</p>
+    <div class="sso-grid">
+      <button class="sso-btn" onclick="doLogin()"><span class="si">🎓</span> School Account</button>
+      <button class="sso-btn" onclick="doLogin()"><span class="si">🏛️</span> State Board ID</button>
+      <button class="sso-btn full" onclick="doLogin()"><span class="si">🆔</span> Government ID</button>
+      <div class="ibm-tag" style="grid-column:1/-1;justify-content:center;" onclick="doLogin()">
+        <span>🔒</span> IBM Secured & Verifiable (Unified Profile)
       </div>
-    </div><!-- end center-col -->
-
-    <!-- RIGHT COLUMN -->
-    <div class="right-col">
-
-      <!-- USID CARD -->
-      <div class="usid-card">
-        <div class="usid-title">Unified Student ID (USID)</div>
-        <div class="usid-profile">
-          <div class="usid-avatar">R</div>
-          <div>
-            <div class="usid-name">Rahul K. Sharma</div>
-            <div class="usid-id">USID: SF7483-9210-4567</div>
-            <div class="usid-blockchain">12-Digit Blockchain ID</div>
-          </div>
-        </div>
-
-        <!-- BADGES -->
-        <div class="badges-section">
-          <div class="badges-title">Badges</div>
-          <div class="badges-row">
-            <div class="badge">
-              <span class="badge-icon">⭐</span> Science Star
-            </div>
-            <div class="badge green">
-              <span class="badge-icon">📅</span>
-              <span>100 Days<br>Attendance</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SKILL MATRIX -->
-      <div class="skill-card">
-        <div class="skill-title">Skill Matrix</div>
-        <div class="radar-wrap">
-          <svg width="230" height="200" viewBox="0 0 230 200">
-            <!-- Labels -->
-            <text x="115" y="16" text-anchor="middle" font-size="11" fill="#555">Coding</text>
-            <text x="210" y="100" text-anchor="start" font-size="11" fill="#555">Arts</text>
-            <text x="170" y="188" text-anchor="middle" font-size="11" fill="#555">Sports</text>
-            <text x="58" y="188" text-anchor="middle" font-size="11" fill="#555">Leadership</text>
-            <text x="14" y="100" text-anchor="start" font-size="11" fill="#555">Sports</text>
-
-            <!-- Pentagon grid lines -->
-            <!-- Outer -->
-            <polygon points="115,26 198,82 168,176 62,176 32,82" fill="none" stroke="#ddd" stroke-width="1"/>
-            <!-- Middle -->
-            <polygon points="115,51 166,91 146,151 84,151 64,91" fill="none" stroke="#ddd" stroke-width="1"/>
-            <!-- Inner -->
-            <polygon points="115,76 134,100 125,126 105,126 96,100" fill="none" stroke="#ddd" stroke-width="1"/>
-
-            <!-- Filled radar -->
-            <polygon points="115,46 178,88 155,168 75,168 52,88" fill="#a5d6a7" opacity="0.7" stroke="#43a047" stroke-width="2"/>
-
-            <!-- Dots on radar -->
-            <circle cx="115" cy="46" r="4" fill="#2e7d32"/>
-            <circle cx="178" cy="88" r="4" fill="#2e7d32"/>
-            <circle cx="155" cy="168" r="4" fill="#2e7d32"/>
-            <circle cx="75" cy="168" r="4" fill="#2e7d32"/>
-            <circle cx="52" cy="88" r="4" fill="#2e7d32"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- ALERTS -->
-      <div class="alerts-card">
-        <div class="alerts-title">Alerts/Notices</div>
-        <div class="alert-item">
-          <div class="alert-dot red"></div>
-          <div>
-            <div class="alert-text">Science Project due: Friday</div>
-            <div class="alert-time">28 hours ago</div>
-          </div>
-        </div>
-        <div class="alert-item">
-          <div class="alert-dot orange"></div>
-          <div>
-            <div class="alert-text">Science Project</div>
-            <div class="alert-time">25 hours ago</div>
-          </div>
-        </div>
-        <div class="alert-item">
-          <div class="alert-dot red"></div>
-          <div>
-            <div class="alert-text">Science Project</div>
-            <div class="alert-time">24 hours ago</div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- end right-col -->
-  </div><!-- end content -->
-</div><!-- end main-wrap -->
-
-<!-- VOICE TUTOR AI -->
-<div class="voice-tutor">
-  <div class="vt-header">
-    <span class="vt-bot">🤖</span>
-    <span class="vt-title">Voice Tutor AI</span>
+    </div>
   </div>
-  <div class="vt-body">
-    <input class="vt-input" type="text" placeholder="Ask AI">
-    <button class="vt-send">➤</button>
+  <div class="login-footer">
+    New Student? <a href="#">Register Now</a> &nbsp;|&nbsp; <a href="#">View User Guide</a>
   </div>
 </div>
 
+<!-- ===== APP SCREEN ===== -->
+<div id="app-screen" class="screen">
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-logo">
+      <div class="logo-ball">📚</div>
+      Siksha-Flow
+    </div>
+    <div class="header-right">
+      <button class="notif-btn" onclick="showNotif()">🔔<span class="notif-dot"></span></button>
+      <div class="avatar-sm" onclick="goPage('settings')">R</div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="app-content">
+
+    <!-- HOME PAGE -->
+    <div id="page-home" class="page active">
+      <div style="padding:16px;">
+        <div class="goal-banner">
+          <div class="goal-info">
+            <h3>📅 Today's Study Goal</h3>
+            <div class="goal-progress"><div class="goal-progress-bar" style="width:75%"></div></div>
+            <p style="margin-top:4px;">Science: Chapter 4 (75% Complete)</p>
+          </div>
+          <button class="btn-focus" onclick="goPage('focus')">⏱ Focus<br>Mode</button>
+        </div>
+
+        <div class="usid-banner">
+          <div class="usid-top">
+            <div class="usid-avatar">R</div>
+            <div class="usid-info">
+              <h3>Rahul K. Sharma</h3>
+              <p>USID: SF7483-9210-4567</p>
+              <p>12-Digit Blockchain ID</p>
+            </div>
+          </div>
+          <div class="usid-badges">
+            <span class="badge-tag">⭐ Science Star</span>
+            <span class="badge-tag">✅ 100 Days Attendance</span>
+            <span class="badge-tag">🏅 Grade 8</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Active Classes <span class="view-all" onclick="goPage('classes')">View All</span></div>
+          <div class="subjects-grid">
+            <div class="subject-card" onclick="goPage('classes')">
+              <div class="subject-icon" style="background:#e8f4fd;">🔢</div>
+              <h4>Maths</h4>
+              <div class="teacher">Ms. Priya</div>
+              <div class="prog-bar"><div class="prog-fill" style="width:75%"></div></div>
+              <div class="prog-label">75%</div>
+            </div>
+            <div class="subject-card" onclick="goPage('classes')">
+              <div class="subject-icon" style="background:#e8f7ef;">🔬</div>
+              <h4>Science</h4>
+              <div class="teacher">Mr. Sharma</div>
+              <div class="prog-bar"><div class="prog-fill" style="width:75%"></div></div>
+              <div class="prog-label">75%</div>
+            </div>
+            <div class="subject-card" onclick="goPage('classes')">
+              <div class="subject-icon" style="background:#fef9e7;">🇮🇳</div>
+              <h4>Hindi</h4>
+              <div class="teacher">Ms. Parma</div>
+              <div class="prog-bar"><div class="prog-fill" style="width:60%"></div></div>
+              <div class="prog-label">60%</div>
+            </div>
+            <div class="subject-card" onclick="goPage('classes')">
+              <div class="subject-icon" style="background:#fdf2f8;">🌐</div>
+              <h4>English</h4>
+              <div class="teacher">Mr. Toma</div>
+              <div class="prog-bar"><div class="prog-fill" style="width:70%"></div></div>
+              <div class="prog-label">70%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">My E-Books 📖 <span class="view-all" onclick="goPage('ebooks')">View All</span></div>
+          <div class="books-scroll">
+            <div class="book-card">
+              <div class="book-cover" style="background:linear-gradient(135deg,#27ae60,#2ecc71);">Science<br>Grade 8<br>NCERT</div>
+              <div class="book-title">NCERT Grade 8</div>
+              <div class="book-sub">Science</div>
+              <button class="btn-read">Read Now</button>
+            </div>
+            <div class="book-card">
+              <div class="book-cover" style="background:linear-gradient(135deg,#2980b9,#3498db);">Mathematics<br>Grade 8</div>
+              <div class="book-title">Mathematics</div>
+              <div class="book-sub">Recent</div>
+              <button class="btn-read">Read Now</button>
+            </div>
+            <div class="book-card">
+              <div class="book-cover" style="background:linear-gradient(135deg,#8e44ad,#9b59b6);">History<br>Our Pasts</div>
+              <div class="book-title">History</div>
+              <div class="book-sub">History</div>
+              <button class="btn-read">Read Now</button>
+            </div>
+            <div class="book-card">
+              <div class="book-cover" style="background:linear-gradient(135deg,#d35400,#e67e22);">Hindi<br>Vasant<br>Grade 8</div>
+              <div class="book-title">Hindi</div>
+              <div class="book-sub">Hindi</div>
+              <button class="btn-read">Read Now</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🔔 Alerts & Notices</div>
+          <div class="alert-item">
+            <div class="alert-dot" style="background:var(--accent2)"></div>
+            <div class="alert-text">
+              <h4>Science Project due: Friday</h4>
+              <p>28 hours ago</p>
+            </div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-dot" style="background:var(--accent)"></div>
+            <div class="alert-text">
+              <h4>Maths Quiz: Chapter 5 tomorrow</h4>
+              <p>2 hours ago</p>
+            </div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-dot" style="background:var(--green)"></div>
+            <div class="alert-text">
+              <h4>New E-Book added: Biology</h4>
+              <p>Today</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLASSES PAGE -->
+    <div id="page-classes" class="page">
+      <div style="padding:16px;">
+        <div class="page-header">
+          <h1>My Classes 🎓</h1>
+          <p>Academic Session 2024-25 | Your complete schedule</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Class Performance Dashboard</div>
+          <div class="gpa-meter">
+            <div class="gpa-num">3.8</div>
+            <div class="gpa-sub">Overall GPA / 4.0</div>
+          </div>
+          <div style="margin-top:10px;">
+            <div class="perf-row">
+              <div class="perf-rank">🥇</div>
+              <div class="perf-avatar">M</div>
+              <div class="perf-name">Meera S.</div>
+              <div class="perf-score">3.95</div>
+            </div>
+            <div class="perf-row">
+              <div class="perf-rank">🥈</div>
+              <div class="perf-avatar" style="background:linear-gradient(135deg,#2ecc71,#27ae60)">R</div>
+              <div class="perf-name">Rahul K. (You)</div>
+              <div class="perf-score">3.80</div>
+            </div>
+            <div class="perf-row">
+              <div class="perf-rank">🥉</div>
+              <div class="perf-avatar" style="background:linear-gradient(135deg,#e67e22,#d35400)">A</div>
+              <div class="perf-name">Aarav M.</div>
+              <div class="perf-score">3.72</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active">All</button>
+          <button class="tab">Core</button>
+          <button class="tab">Elective</button>
+          <button class="tab">Completed</button>
+        </div>
+
+        <div class="subjects-grid">
+          <div class="subject-card">
+            <div class="subject-icon" style="background:#e8f4fd;">🔢</div>
+            <h4>Maths</h4>
+            <div class="teacher">Ms. Priya</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:75%"></div></div>
+            <div class="prog-label">75% | Quiz: 88%</div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-icon" style="background:#e8f7ef;">🔬</div>
+            <h4>Science</h4>
+            <div class="teacher">Mr. Sharma</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:75%"></div></div>
+            <div class="prog-label">75% | STEM</div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-icon" style="background:#fef9e7;">🇮🇳</div>
+            <h4>Hindi</h4>
+            <div class="teacher">Ms. Padma</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:60%"></div></div>
+            <div class="prog-label">60%</div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-icon" style="background:#fdf2f8;">🌐</div>
+            <h4>English</h4>
+            <div class="teacher">Mr. Toma</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:70%"></div></div>
+            <div class="prog-label">70%</div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-icon" style="background:#f5f0ff;">🌍</div>
+            <h4>Social Studies</h4>
+            <div class="teacher">Mr. Singh</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:65%"></div></div>
+            <div class="prog-label">Project Status</div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-icon" style="background:#e8f7ef;">💻</div>
+            <h4>Comp. Sci.</h4>
+            <div class="teacher">Mr. Das</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:90%"></div></div>
+            <div class="prog-label">Lab Completed</div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-icon" style="background:#fdf2f8;">🎨</div>
+            <h4>Art</h4>
+            <div class="teacher">Ms. Rao</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:55%"></div></div>
+            <div class="prog-label">Portfolio 55%</div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-icon" style="background:#fef9e7;">🏃</div>
+            <h4>Physical Ed.</h4>
+            <div class="teacher">Mr. Khan</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:80%"></div></div>
+            <div class="prog-label">Attendance: 80%</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🤖 AI Learning Recommendations</div>
+          <div class="alert-item">
+            <div class="alert-dot" style="background:var(--green)"></div>
+            <div class="alert-text"><h4>Focus on Chapter 4 Science review</h4><p>AI suggestion based on quiz scores</p></div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-dot" style="background:var(--accent)"></div>
+            <div class="alert-text"><h4>Hindi Assignment incomplete</h4><p>Submit by Friday</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- E-BOOKS PAGE -->
+    <div id="page-ebooks" class="page">
+      <div style="padding:16px;">
+        <div class="page-header">
+          <h1>Digital Library 📚</h1>
+          <p>All your books in one place</p>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-bottom:12px;background:white;border-radius:12px;padding:10px 14px;border:1.5px solid var(--border);">
+          <span>🔍</span>
+          <input type="text" placeholder="Search for Books..." style="flex:1;border:none;font-size:13px;font-family:'Nunito',sans-serif;outline:none;color:var(--text);">
+        </div>
+
+        <div class="tabs">
+          <button class="tab active">All Grade 8</button>
+          <button class="tab">NCERT</button>
+          <button class="tab">State Board</button>
+          <button class="tab">Reference</button>
+        </div>
+
+        <div class="books-scroll" style="margin-bottom:16px;">
+          <div class="book-card">
+            <div class="book-cover" style="background:linear-gradient(135deg,#1a7a4a,#27ae60);">Science<br>Ch. 4: Light<br>(NCERT)</div>
+            <div class="book-title">Science - Ch 4</div>
+            <div style="font-size:10px;color:var(--green);font-weight:700;">75%</div>
+            <button class="btn-read">Read Now</button>
+          </div>
+          <div class="book-card">
+            <div class="book-cover" style="background:linear-gradient(135deg,#1565c0,#1e88e5);">Mathematics<br>Grade 8</div>
+            <div class="book-title">Mathematics</div>
+            <div style="font-size:10px;color:var(--green);font-weight:700;">55%</div>
+            <button class="btn-read">Read Now</button>
+          </div>
+          <div class="book-card">
+            <div class="book-cover" style="background:linear-gradient(135deg,#6a1b9a,#ab47bc);">Biology<br>Cell Structure</div>
+            <div class="book-title">Biology</div>
+            <div style="font-size:10px;color:var(--green);font-weight:700;">77%</div>
+            <button class="btn-read">Read Now</button>
+          </div>
+          <div class="book-card">
+            <div class="book-cover" style="background:linear-gradient(135deg,#bf360c,#ef6c00);">History<br>Our Pasts</div>
+            <div class="book-title">History</div>
+            <div style="font-size:10px;color:var(--green);font-weight:700;">68%</div>
+            <button class="btn-read">Read Now</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📌 Recent Reads</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:8px;background:var(--green-pale);border-radius:10px;">
+              <div style="width:40px;height:50px;border-radius:6px;background:linear-gradient(135deg,#1a7a4a,#27ae60);display:flex;align-items:center;justify-content:center;font-size:10px;color:white;text-align:center;font-weight:700;line-height:1.2;">Sci</div>
+              <div><div style="font-size:12px;font-weight:800;">Science - Chapter 4: Light</div><div style="font-size:10px;color:var(--muted);">Ms. Sharma's Pick • 75%</div></div>
+              <button class="btn-read" style="margin-left:auto;margin-top:0;">Read</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px;background:var(--green-pale);border-radius:10px;">
+              <div style="width:40px;height:50px;border-radius:6px;background:linear-gradient(135deg,#1565c0,#1e88e5);display:flex;align-items:center;justify-content:center;font-size:10px;color:white;text-align:center;font-weight:700;line-height:1.2;">Math</div>
+              <div><div style="font-size:12px;font-weight:800;">Mathematics - Grade 8</div><div style="font-size:10px;color:var(--muted);">Ms. Sharma's Pick • 55%</div></div>
+              <button class="btn-read" style="margin-left:auto;margin-top:0;">Read</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">👩‍🏫 Recommended by Teacher</div>
+          <div class="books-scroll">
+            <div class="book-card">
+              <div class="book-cover" style="background:linear-gradient(135deg,#1a7a4a,#27ae60);font-size:9px;">Sci Ch.4 Light</div>
+              <div class="book-title" style="font-size:10px;">Science Ch 4</div>
+              <button class="btn-read" style="font-size:9px;padding:4px 8px;">+ Notes</button>
+            </div>
+            <div class="book-card">
+              <div class="book-cover" style="background:linear-gradient(135deg,#1565c0,#1e88e5);font-size:9px;">Math Grade 8</div>
+              <div class="book-title" style="font-size:10px;">Mathematics</div>
+              <button class="btn-read" style="font-size:9px;padding:4px 8px;">Read</button>
+            </div>
+            <div class="book-card">
+              <div class="book-cover" style="background:linear-gradient(135deg,#6a1b9a,#ab47bc);font-size:9px;">Biology Cell</div>
+              <div class="book-title" style="font-size:10px;">Biology</div>
+              <button class="btn-read" style="font-size:9px;padding:4px 8px;">+ Notes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SMART NOTES PAGE -->
+    <div id="page-notes" class="page">
+      <div style="padding:16px;">
+        <div class="page-header">
+          <h1>Smart Notes ✏️</h1>
+          <p>AI-powered real-time class notes</p>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active">All</button>
+          <button class="tab">Maths</button>
+          <button class="tab">Science</button>
+          <button class="tab">Hindi</button>
+        </div>
+
+        <div class="card" style="border:1.5px solid var(--accent2);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <div class="card-title" style="margin-bottom:0;">Live Class Intake</div>
+            <span class="live-badge"><span class="live-dot"></span> LIVE</span>
+          </div>
+          <div style="background:var(--green-pale);border-radius:10px;padding:12px;font-size:12px;line-height:1.6;color:var(--text);border:1.5px dashed var(--green-mid);">
+            Ms. Sharma's current handwriting is being instantly converted into clean digital text in real-time... ✨
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🤖 AI Note Assistant</div>
+          <div class="ai-tools">
+            <button class="ai-tool-btn" onclick="aiAction('Summarizing recent notes...')">📝 Summarize Recent Notes</button>
+            <button class="ai-tool-btn" onclick="aiAction('Creating AI quiz from notes...')">🧠 Create AI Quiz</button>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <h4>Science - Ms. Sharma | Chapter 4: Light</h4>
+          <div class="note-meta">1 hr ago</div>
+          <div class="note-preview">Chapter 4 completes the light chapter with handistant notes, touch of the ray. Key terms: Ray diagram, Reflection, Electronic changes...</div>
+          <div class="note-btns">
+            <button class="note-btn primary">View Full Note</button>
+            <button class="note-btn" onclick="aiAction('AI editing note...')">🤖 AI Edit</button>
+          </div>
+        </div>
+
+        <div class="note-card" style="border-left-color:var(--accent);">
+          <h4>Maths - Ms. Priya | Quadratic Equations</h4>
+          <div class="note-meta">3 hrs ago</div>
+          <div class="note-preview">Quadratic equations: ax² + bx + c = 0. Formula: x = (-b ± √(b²-4ac)) / 2a. Practice problems covered in class...</div>
+          <div class="note-btns">
+            <button class="note-btn primary">View Full Note</button>
+            <button class="note-btn">🤖 AI Edit</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📊 Note Insights</div>
+          <div class="alert-item">
+            <div class="alert-dot" style="background:var(--accent2)"></div>
+            <div class="alert-text"><h4>Chapter 4 is complex — review Science notes</h4></div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-dot" style="background:var(--accent)"></div>
+            <div class="alert-text"><h4>Focus 7 is complex — review Science notes</h4></div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-dot" style="background:var(--green)"></div>
+            <div class="alert-text"><h4>Focus on Chapter 4.5's Science Equations</h4></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Study Sessions</div>
+          <div style="display:flex;gap:10px;">
+            <div style="flex:1;background:var(--green-pale);border-radius:12px;padding:12px;">
+              <div style="font-size:12px;font-weight:800;">Morning Session</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">Science & Maths | 2.5 hrs</div>
+              <div style="margin-top:6px;display:flex;gap:4px;align-items:center;">
+                <span class="chip">Focus: 90%</span>
+                <span class="chip">Notes ✓</span>
+              </div>
+            </div>
+            <div style="flex:1;background:#fef9e7;border-radius:12px;padding:12px;">
+              <div style="font-size:12px;font-weight:800;">Afternoon Session</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">Hindi | 1 hr</div>
+              <div style="margin-top:6px;">
+                <span class="chip orange">Focus: 75%</span>
+                <span class="chip red">Incomplete</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOCUS MODE PAGE -->
+    <div id="page-focus" class="page">
+      <div style="padding:16px;">
+        <div class="page-header">
+          <h1>Focus Mode ⏱</h1>
+          <p>Block distractions. Achieve more.</p>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="sv">3</div>
+            <div class="sk">Sessions Today</div>
+          </div>
+          <div class="stat-box">
+            <div class="sv">2.5h</div>
+            <div class="sk">Focus Time</div>
+          </div>
+          <div class="stat-box">
+            <div class="sv">8.5</div>
+            <div class="sk">Focus Score</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="timer-display">
+            <div class="timer-num" id="timer-display">45:00</div>
+            <div class="timer-label">Mins — Focus Active</div>
+          </div>
+          <div class="timer-controls">
+            <button class="timer-btn secondary" onclick="resetTimer()">↺</button>
+            <button class="timer-btn primary" id="timer-btn" onclick="toggleTimer()">▶</button>
+            <button class="timer-btn secondary" onclick="addTime()">+5</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📋 Your Task & Goals</div>
+          <div style="background:var(--green-pale);border-radius:10px;padding:12px;border-left:3px solid var(--green);">
+            <div style="font-size:12px;font-weight:800;">Primary Goal</div>
+            <div style="font-size:12px;margin-top:4px;color:var(--text);">Topic: <b>Science - Chapter 4: Light</b></div>
+            <div style="font-size:12px;color:var(--text);">Tasks: Review Smart Notes, Complete Quiz 4.2</div>
+            <div style="font-size:12px;color:var(--green);font-weight:700;margin-top:4px;">Target: 100% ✓</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🎵 Ambient Sound</div>
+          <div class="sound-list">
+            <div class="sound-chip active" onclick="toggleSound(this)">🌊 White Noise</div>
+            <div class="sound-chip" onclick="toggleSound(this)">🌧 Rainfall</div>
+            <div class="sound-chip" onclick="toggleSound(this)">📚 Library</div>
+            <div class="sound-chip" onclick="toggleSound(this)">🌿 Forest</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📅 Break Schedule</div>
+          <div style="display:flex;gap:10px;">
+            <div style="flex:1;background:var(--green-pale);border-radius:10px;padding:10px;text-align:center;">
+              <div style="font-size:11px;font-weight:800;color:var(--green);">Break 1 (5 mins)</div>
+              <div style="font-size:20px;margin:4px 0;">🧘</div>
+              <div style="font-size:10px;color:var(--muted);">Stretch</div>
+              <div style="font-size:10px;font-weight:700;color:var(--green);">in 25 mins</div>
+            </div>
+            <div style="flex:1;background:var(--green-pale);border-radius:10px;padding:10px;text-align:center;">
+              <div style="font-size:11px;font-weight:800;color:var(--green);">Break 2 (10 mins)</div>
+              <div style="font-size:20px;margin:4px 0;">☕</div>
+              <div style="font-size:10px;color:var(--muted);">Tea Break</div>
+              <div style="font-size:10px;font-weight:700;color:var(--green);">in 50 mins</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🤖 Focus Assist AI — Distraction Tracker</div>
+          <div class="distraction-item">
+            <span>📱 Phone screen activation</span>
+            <span class="dist-val">0 mins</span>
+          </div>
+          <div class="distraction-item">
+            <span>🌐 Browser tab switch</span>
+            <span class="dist-val">2 mins</span>
+          </div>
+          <div class="distraction-item">
+            <span>📲 Social media check</span>
+            <span class="dist-val">0 mins</span>
+          </div>
+          <div style="margin-top:10px;background:var(--green-pale);border-radius:10px;padding:10px;">
+            <div style="font-size:11px;font-weight:800;color:var(--green);margin-bottom:6px;">💡 AI Tips</div>
+            <div style="font-size:11px;color:var(--text);">✓ Close other browser tabs</div>
+            <div style="font-size:11px;color:var(--text);">✓ Place phone in a drawer</div>
+            <div style="font-size:11px;color:var(--text);">✓ Use noise-cancelling earphones</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDENT ID PAGE -->
+    <div id="page-usid" class="page">
+      <div style="padding:16px;">
+        <div class="page-header">
+          <h1>Student ID (USID) 🪪</h1>
+          <p>Your Digital Student Passport</p>
+        </div>
+
+        <div class="id-card">
+          <div class="id-top">
+            <div class="id-photo">R</div>
+            <div class="id-details">
+              <h2>Rahul Sharma</h2>
+              <p>Ahmedabad International School</p>
+              <p>Grade: 8 | DOB: 19 May 2020</p>
+              <div class="id-number">SF7483-9210-4567</div>
+            </div>
+          </div>
+          <div class="id-verified">✅ Blockchain Verified — 2023-10:46:58 UTC</div>
+          <div class="id-actions">
+            <button class="id-action-btn">⬇ Download ID</button>
+            <button class="id-action-btn" onclick="copyUSID()">📋 Copy USID</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🏆 Achievements & Badges</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:8px 0;">
+            <div style="text-align:center;">
+              <div style="font-size:36px;">🔬</div>
+              <div style="font-size:10px;font-weight:800;color:var(--text);margin-top:4px;">Science<br>Olympiad</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:36px;">🏆</div>
+              <div style="font-size:10px;font-weight:800;color:var(--text);margin-top:4px;">Grade 8<br>Top Scorer</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:36px;">✅</div>
+              <div style="font-size:10px;font-weight:800;color:var(--text);margin-top:4px;">100 Days<br>Attendance</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:10px;">
+            <div style="flex:1;text-align:center;background:var(--green-pale);border-radius:12px;padding:12px;">
+              <div style="font-size:28px;font-weight:900;color:var(--green);">8.8</div>
+              <div style="font-size:10px;color:var(--muted);">Smart Notes Mastery</div>
+            </div>
+            <div style="flex:1;text-align:center;background:var(--green-pale);border-radius:12px;padding:12px;">
+              <div style="font-size:28px;font-weight:900;color:var(--green);">8.1</div>
+              <div style="font-size:10px;color:var(--muted);">Resume Strength</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🔗 Linked Accounts</div>
+          <div class="linked-item">
+            <div class="linked-icon">📚</div>
+            <div class="linked-info"><h4>NCERT E-Books (Grade 8)</h4><p>linked ✓</p></div>
+          </div>
+          <div class="linked-item">
+            <div class="linked-icon">🏫</div>
+            <div class="linked-info"><h4>School Management System</h4><p>linked ✓</p></div>
+          </div>
+          <div class="linked-item">
+            <div class="linked-icon">🏛️</div>
+            <div class="linked-info"><h4>State Board Records</h4><p>linked ✓</p></div>
+          </div>
+          <div class="linked-item">
+            <div class="linked-icon">🤖</div>
+            <div class="linked-info"><h4>AI Career Profile</h4><p>linked ✓</p></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📄 Linked Documents</div>
+          <div class="linked-item">
+            <div class="linked-icon">📋</div>
+            <div class="linked-info"><h4>Current Grade Sheet</h4><p>Tap to view</p></div>
+          </div>
+          <div class="linked-item">
+            <div class="linked-icon">🏅</div>
+            <div class="linked-info"><h4>Achievement Certificates</h4><p>Tap to view</p></div>
+          </div>
+          <div class="linked-item">
+            <div class="linked-icon">📁</div>
+            <div class="linked-info"><h4>Co-curricular Records</h4><p>Tap to view</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAREER HUB PAGE -->
+    <div id="page-career" class="page">
+      <div style="padding:16px;">
+        <div class="page-header">
+          <h1>Career Hub 🚀</h1>
+          <p>AI-powered career assessment & planning</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Career Readiness Score</div>
+          <div class="readiness-gauge">
+            <div class="gauge-num">7.5</div>
+            <div class="gauge-label">/ 10 — USID Integration: Active</div>
+            <div class="gauge-bar"><div class="gauge-fill"></div></div>
+            <div style="font-size:11px;color:var(--muted);">Start focusing on co-curricular activities to improve!</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🤖 AI Career Assessment</div>
+          <div style="background:var(--green-pale);border-radius:10px;padding:12px;margin-bottom:10px;">
+            <div style="font-size:12px;font-weight:800;color:var(--green);margin-bottom:6px;">Key Recommendations</div>
+            <div style="font-size:12px;color:var(--text);">Based on your USID & Smart Notes, you have strong potential in <b>STEM</b>. Explore: Coding, Physics.</div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sk-top"><span>Problem Solving</span><span class="sk-val">85%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:85%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sk-top"><span>Technology</span><span class="sk-val">78%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:78%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sk-top"><span>Creativity</span><span class="sk-val">72%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:72%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sk-top"><span>Leadership</span><span class="sk-val">65%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:65%"></div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🗺 Career Path Explorer</div>
+          <div class="career-path-card" style="border-color:var(--green);background:var(--green-pale);">
+            <div class="career-icon">📊</div>
+            <div class="career-info">
+              <h4>Data Scientist</h4>
+              <p>Grade 8 → STEM → B.Tech CS/Data → Data Analyst</p>
+            </div>
+            <div class="career-arrow">→</div>
+          </div>
+          <div class="career-path-card">
+            <div class="career-icon">⚛️</div>
+            <div class="career-info">
+              <h4>Physicist</h4>
+              <p>Grade 8 → Science Stream → B.Sc Physics</p>
+            </div>
+            <div class="career-arrow">→</div>
+          </div>
+          <div class="career-path-card">
+            <div class="career-icon">💼</div>
+            <div class="career-info">
+              <h4>Entrepreneur</h4>
+              <p>Build skills in leadership & creativity</p>
+            </div>
+            <div class="career-arrow">→</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:4px;">
+            <button style="flex:1;background:var(--green);color:white;border:none;border-radius:10px;padding:12px;font-size:13px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;" onclick="aiAction('Viewing career path...')">View Path</button>
+            <button style="flex:1;background:var(--green-pale);color:var(--green);border:1.5px solid var(--green-mid);border-radius:10px;padding:12px;font-size:13px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;" onclick="aiAction('Starting career quiz...')">Take Quiz</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🎯 Internship & Workshop Board</div>
+          <div class="workshop-item">
+            <div style="font-size:24px;">💻</div>
+            <div>
+              <h4>Summer Coding Camp</h4>
+              <p>Linked with school • Online/Offline</p>
+            </div>
+            <button class="btn-read" style="margin-left:auto;">Apply</button>
+          </div>
+          <div class="workshop-item">
+            <div style="font-size:24px;">🚀</div>
+            <div>
+              <h4>Junior Entrepreneurship Workshop</h4>
+              <p>Linked with school • Online</p>
+            </div>
+            <button class="btn-read" style="margin-left:auto;">Apply</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🏆 Top Projects</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="chip">🤖 AI Chatbot</span>
+            <span class="chip">🚀 Rocket Simulation</span>
+          </div>
+          <button style="width:100%;margin-top:10px;background:var(--green-pale);color:var(--green);border:1.5px solid var(--green-mid);border-radius:10px;padding:12px;font-size:13px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;">View Full Portfolio →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div id="page-settings" class="page">
+      <div style="padding:16px;">
+        <div class="page-header">
+          <h1>Settings ⚙️</h1>
+          <p>Customize your Siksha-Flow experience</p>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-avatar">R</div>
+          <div class="profile-details">
+            <h2>Rahul Sharma</h2>
+            <div class="school">Ahmedabad International School</div>
+            <p>Grade: 8 | DOB: 19 May 2020</p>
+            <p style="font-family:monospace;font-size:10px;color:var(--green);">SF7483-9210-4567</p>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>App Preferences</h3>
+          <div class="setting-item">
+            <span class="setting-icon">🌐</span>
+            <span class="setting-label">Language</span>
+            <span class="setting-val">English</span>
+            <span class="setting-arrow">›</span>
+          </div>
+          <div class="setting-item">
+            <span class="setting-icon">🎨</span>
+            <span class="setting-label">Theme</span>
+            <span class="setting-val">Dark</span>
+            <span class="setting-arrow">›</span>
+          </div>
+          <div class="setting-item">
+            <span class="setting-icon">🔔</span>
+            <span class="setting-label">Notifications</span>
+            <div class="toggle" onclick="this.classList.toggle('off')"></div>
+          </div>
+          <div class="setting-item">
+            <span class="setting-icon">📶</span>
+            <span class="setting-label">Offline Access</span>
+            <div class="toggle off" onclick="this.classList.toggle('off')"></div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>Privacy & Data</h3>
+          <div class="setting-item">
+            <span class="setting-icon">⛓</span>
+            <span class="setting-label">Blockchain Access Control</span>
+            <div class="toggle" onclick="this.classList.toggle('off')"></div>
+          </div>
+          <div class="setting-item">
+            <span class="setting-icon">🔁</span>
+            <span class="setting-label">Data Sharing</span>
+            <div class="toggle off" onclick="this.classList.toggle('off')"></div>
+          </div>
+          <div class="setting-item">
+            <span class="setting-icon">📊</span>
+            <span class="setting-label">Personalization Level</span>
+            <span class="setting-val">Normal</span>
+            <span class="setting-arrow">›</span>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>USID & Account</h3>
+          <div class="setting-item">
+            <span class="setting-icon">🔒</span>
+            <span class="setting-label">Password & Security</span>
+            <span class="setting-arrow">›</span>
+          </div>
+          <div class="setting-item">
+            <span class="setting-icon">🔗</span>
+            <span class="setting-label">Manage Linked Services</span>
+            <span class="setting-arrow">›</span>
+          </div>
+          <div class="setting-item">
+            <span class="setting-icon">📞</span>
+            <span class="setting-label">Update Contact Information</span>
+            <span class="setting-arrow">›</span>
+          </div>
+          <div class="setting-item">
+            <span class="setting-icon">✅</span>
+            <span class="setting-label">Verify Documents</span>
+            <span class="setting-arrow">›</span>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>Help & Support</h3>
+          <div class="setting-item">
+            <span class="setting-icon">⚠️</span>
+            <span class="setting-label">Report an Issue</span>
+            <span class="setting-arrow">›</span>
+          </div>
+          <div class="setting-item">
+            <span class="setting-icon">❓</span>
+            <span class="setting-label">FAQs</span>
+            <span class="setting-arrow">›</span>
+          </div>
+          <div class="setting-item">
+            <span class="setting-icon">📘</span>
+            <span class="setting-label">User Guide</span>
+            <span class="setting-arrow">›</span>
+          </div>
+        </div>
+
+        <div class="logout-bar" onclick="doLogout()">
+          <span>🚪 Log Out</span>
+          <span style="font-size:14px;color:var(--accent2);">›</span>
+        </div>
+        <div style="height:8px;"></div>
+      </div>
+    </div>
+
+  </div><!-- end app-content -->
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="goPage('home')" id="nav-home">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-item" onclick="goPage('classes')" id="nav-classes">
+      <span class="nav-icon">🎓</span>
+      <span class="nav-label">Classes</span>
+    </button>
+    <button class="nav-item" onclick="goPage('ebooks')" id="nav-ebooks">
+      <span class="nav-icon">📚</span>
+      <span class="nav-label">E-Books</span>
+    </button>
+    <button class="nav-item" onclick="goPage('notes')" id="nav-notes">
+      <span class="nav-icon">✏️</span>
+      <span class="nav-label">Notes</span>
+    </button>
+    <button class="nav-item" onclick="goPage('career')" id="nav-career">
+      <span class="nav-icon">🚀</span>
+      <span class="nav-label">Career</span>
+    </button>
+  </nav>
+
+</div><!-- end app-screen -->
+
+<!-- AI Voice Bubble -->
+<div class="ai-bubble" id="ai-bubble" style="display:none;">
+  <div class="ai-chat-box" id="ai-chat-box">
+    <div class="ai-chat-title">🤖 Voice Tutor AI</div>
+    <div class="ai-chat-inp">
+      <input type="text" placeholder="Ask AI anything..." id="ai-inp">
+      <button class="ai-send" onclick="sendAI()">➤</button>
+    </div>
+  </div>
+  <button class="ai-bubble-btn" onclick="toggleAI()">🤖</button>
+</div>
+
+<!-- Toast -->
+<div id="toast" style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a3a2a;color:white;padding:10px 20px;border-radius:12px;font-size:12px;font-weight:700;opacity:0;transition:all 0.3s;z-index:999;pointer-events:none;white-space:nowrap;"></div>
+
+<script>
+// ===== STATE =====
+let timerInterval = null;
+let timerSeconds = 45 * 60;
+let timerRunning = false;
+let currentPage = 'home';
+
+// ===== LOGIN =====
+function doLogin() {
+  document.getElementById('login-screen').classList.remove('active');
+  document.getElementById('app-screen').classList.add('active');
+  document.getElementById('ai-bubble').style.display = 'block';
+  showToast('Welcome back, Rahul! 👋');
+}
+
+function doLogout() {
+  if (confirm('Logout se bahar jaoge?')) {
+    document.getElementById('app-screen').classList.remove('active');
+    document.getElementById('login-screen').classList.add('active');
+    document.getElementById('ai-bubble').style.display = 'none';
+    document.getElementById('login-usid').value = '';
+    document.getElementById('login-pass').value = '';
+  }
+}
+
+// ===== NAVIGATION =====
+function goPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  document.querySelector('.app-content').scrollTop = 0;
+  currentPage = page;
+
+  // Update header title
+  const titles = {
+    home: 'Virtual Bag, Rahul! (Grade 8)',
+    classes: 'My Classes',
+    ebooks: 'Digital Library',
+    notes: 'Smart Notes',
+    focus: 'Focus Mode',
+    usid: 'Student ID (USID)',
+    career: 'Career Hub',
+    settings: 'Settings'
+  };
+}
+
+// ===== TIMER =====
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+  const s = (timerSeconds % 60).toString().padStart(2, '0');
+  document.getElementById('timer-display').textContent = m + ':' + s;
+}
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('timer-btn').textContent = '▶';
+    showToast('Focus paused ⏸');
+  } else {
+    timerInterval = setInterval(() => {
+      if (timerSeconds > 0) { timerSeconds--; updateTimerDisplay(); }
+      else {
+        clearInterval(timerInterval); timerRunning = false;
+        document.getElementById('timer-btn').textContent = '▶';
+        showToast('Focus session complete! 🎉');
+        timerSeconds = 45 * 60; updateTimerDisplay();
+      }
+    }, 1000);
+    timerRunning = true;
+    document.getElementById('timer-btn').textContent = '⏸';
+    showToast('Focus session started! 🎯');
+  }
+}
+function resetTimer() {
+  clearInterval(timerInterval); timerRunning = false;
+  timerSeconds = 45 * 60; updateTimerDisplay();
+  document.getElementById('timer-btn').textContent = '▶';
+  showToast('Timer reset ↺');
+}
+function addTime() {
+  timerSeconds += 300; updateTimerDisplay();
+  showToast('+5 minutes added ⏱');
+}
+
+// ===== SOUND =====
+function toggleSound(el) {
+  document.querySelectorAll('.sound-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  showToast('Now playing: ' + el.textContent.trim() + ' 🎵');
+}
+
+// ===== AI =====
+function toggleAI() {
+  const box = document.getElementById('ai-chat-box');
+  box.classList.toggle('open');
+}
+function sendAI() {
+  const inp = document.getElementById('ai-inp');
+  if (inp.value.trim()) {
+    showToast('AI: Processing "' + inp.value.trim() + '"... 🤖');
+    inp.value = '';
+    document.getElementById('ai-chat-box').classList.remove('open');
+  }
+}
+function aiAction(msg) {
+  showToast('🤖 ' + msg);
+}
+
+// ===== UTILS =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 2500);
+}
+function showNotif() { showToast('📋 3 new alerts waiting!'); }
+function copyUSID() {
+  navigator.clipboard && navigator.clipboard.writeText('SF7483-9210-4567');
+  showToast('USID copied: SF7483-9210-4567 📋');
+}
+
+// ===== TAB BEHAVIOR =====
+document.querySelectorAll('.tabs').forEach(tabGroup => {
+  tabGroup.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      tabGroup.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+});
+
+// Press Enter to login
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    if (document.getElementById('login-screen').classList.contains('active')) doLogin();
+    if (document.getElementById('ai-chat-box').classList.contains('open')) sendAI();
+  }
+});
+
+// Bottom nav for USID / Settings (not in main nav)
+document.querySelector('.avatar-sm').addEventListener('click', () => goPage('settings'));
+</script>
 </body>
 </html>
