@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Siksha-Flow</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g1:#0a2e1a;--g2:#134d2e;--g3:#1a6b3e;--g4:#22914f;--g5:#2db564;
+  --gold:#c9a84c;--gold2:#e8c96b;
+  --cream:#f8f5ee;--cream2:#efe9d8;
+  --text:#0d1f13;--muted:#5a7a65;
+  --border:rgba(34,145,79,0.18);
+  --glass:rgba(255,255,255,0.72);
+  --shadow:0 8px 32px rgba(10,46,26,0.15);
+  --shadow2:0 2px 12px rgba(10,46,26,0.08);
+  --r:18px;--nav:66px;--hdr:58px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);max-width:430px;margin:0 auto;position:relative;overflow-x:hidden;min-height:100vh;}
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+
+/* ═══ LOGIN ═══ */
+#ls{position:relative;min-height:100vh;overflow:hidden;justify-content:flex-end;}
+.lbg{position:absolute;inset:0;background:url('https://gooo26.github.io/Siksha-Flow/IMG_20260505_194347.png') center/cover no-repeat;z-index:0;}
+.lbg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,46,26,0.2) 0%,rgba(10,46,26,0.1) 30%,rgba(10,46,26,0.85) 62%,rgba(10,46,26,0.97) 100%);}
+.ltop{position:absolute;top:0;left:0;right:0;padding:44px 28px 0;z-index:2;display:flex;flex-direction:column;align-items:center;}
+.ltop-logo{width:70px;height:70px;border-radius:20px;object-fit:cover;box-shadow:0 8px 32px rgba(0,0,0,0.45);border:2.5px solid rgba(201,168,76,0.55);}
+.ltop-brand{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;margin-top:10px;letter-spacing:.5px;}
+.ltop-tag{font-size:12px;color:rgba(255,255,255,.6);margin-top:3px;}
+.lstudents{position:absolute;bottom:340px;left:0;right:0;z-index:1;display:flex;justify-content:center;pointer-events:none;}
+.lstudents img{width:330px;object-fit:contain;filter:drop-shadow(0 10px 30px rgba(0,0,0,.35));}
+.lcard{position:relative;z-index:2;background:rgba(255,255,255,.10);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.2);border-radius:32px 32px 0 0;padding:26px 24px 38px;}
+.lcard-t{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:3px;}
+.lcard-s{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:20px;}
+.ig{margin-bottom:13px;}
+.ig label{font-size:10px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.9px;display:block;margin-bottom:6px;}
+.iw{display:flex;align-items:center;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);border-radius:13px;padding:0 13px;transition:border-color .2s,background .2s;}
+.iw:focus-within{border-color:var(--gold2);background:rgba(255,255,255,.18);}
+.iw .ii{font-size:16px;margin-right:9px;opacity:.65;}
+.iw input{flex:1;border:none;background:transparent;padding:13px 0;font-size:13px;font-family:'DM Sans',sans-serif;color:#fff;outline:none;}
+.iw input::placeholder{color:rgba(255,255,255,.3);}
+.btnm{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--g1);border:none;border-radius:13px;padding:15px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:6px;box-shadow:0 6px 24px rgba(201,168,76,.45);transition:transform .15s;}
+.btnm:active{transform:scale(.97);}
+.div-or{display:flex;align-items:center;gap:10px;margin:14px 0;}
+.div-or::before,.div-or::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.15);}
+.div-or span{font-size:11px;color:rgba(255,255,255,.4);}
+.sso-g{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ssob{display:flex;align-items:center;justify-content:center;gap:7px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.18);border-radius:12px;padding:11px 10px;font-size:11px;font-weight:600;color:rgba(255,255,255,.82);font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
+.ssob:active{background:rgba(255,255,255,.2);}
+.ssob .si{font-size:15px;}
+.ssof{grid-column:1/-1;}
+.ibmr{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(201,168,76,.15);border:1.5px solid rgba(201,168,76,.35);border-radius:12px;padding:11px;font-size:11px;font-weight:700;color:var(--gold2);cursor:pointer;}
+.lfoot{text-align:center;margin-top:14px;font-size:12px;color:rgba(255,255,255,.4);}
+.lfoot a{color:var(--gold2);font-weight:600;text-decoration:none;}
+
+/* ═══ APP SHELL ═══ */
+#as{background:var(--cream);}
+.ahdr{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:var(--hdr);background:rgba(248,245,238,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(34,145,79,.1);display:flex;align-items:center;padding:0 16px;z-index:100;box-shadow:0 2px 16px rgba(10,46,26,.07);}
+.ahl{display:flex;align-items:center;gap:9px;}
+.ahl img{width:34px;height:34px;border-radius:10px;object-fit:cover;border:1.5px solid rgba(201,168,76,.4);box-shadow:0 2px 8px rgba(10,46,26,.15);}
+.ahl span{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--g2);}
+.ahr{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.hbtn{width:36px;height:36px;border-radius:50%;border:none;background:var(--glass);display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;box-shadow:var(--shadow2);position:relative;}
+.ndot{position:absolute;top:6px;right:6px;width:7px;height:7px;background:#e74c3c;border-radius:50%;border:2px solid white;}
+.hav{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--g3),var(--g5));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;cursor:pointer;border:2px solid rgba(201,168,76,.45);}
+.ac{margin-top:var(--hdr);margin-bottom:var(--nav);min-height:calc(100vh - var(--hdr) - var(--nav));overflow-y:auto;}
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:var(--nav);background:rgba(248,245,238,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(34,145,79,.1);display:flex;z-index:100;box-shadow:0 -4px 20px rgba(10,46,26,.08);}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:none;font-family:'DM Sans',sans-serif;cursor:pointer;padding:8px 4px;position:relative;}
+.nii{font-size:21px;transition:transform .2s;}
+.nil{font-size:9px;font-weight:600;color:var(--muted);transition:color .2s;letter-spacing:.2px;}
+.ni.active .nii{transform:scale(1.18);}
+.ni.active .nil{color:var(--g3);font-weight:700;}
+.ni.active::after{content:'';position:absolute;bottom:6px;width:20px;height:3px;background:linear-gradient(90deg,var(--g3),var(--g5));border-radius:2px;}
+
+/* ═══ PAGES ═══ */
+.page{display:none;padding:16px;animation:fu .28s ease;}
+.page.active{display:block;}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══ CARD ═══ */
+.card{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.85);margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.25),transparent);}
+.chd{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+.chd .va{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--g3);cursor:pointer;}
+
+/* HERO BANNER */
+.hb{background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 55%,var(--g3) 100%);border-radius:var(--r);padding:18px;margin-bottom:14px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(10,46,26,.28);}
+.hb::before{content:'';position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.04);}
+.hb::after{content:'';position:absolute;bottom:-20px;left:70px;width:100px;height:100px;border-radius:50%;background:rgba(201,168,76,.07);}
+.hbt{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
+.hbav{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:22px;border:2.5px solid rgba(201,168,76,.45);}
+.hbi h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:white;}
+.hbi p{font-size:10px;color:rgba(255,255,255,.5);margin-top:1px;font-family:monospace;}
+.hbbadges{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;position:relative;z-index:1;}
+.hbadge{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(201,168,76,.3);border-radius:20px;padding:4px 10px;font-size:10px;font-weight:600;color:rgba(255,255,255,.88);}
+.hbadge .ico{color:var(--gold2);}
+
+/* GOAL */
+.gc{background:linear-gradient(120deg,#e8f5ee,#d4eddf);border:1.5px solid rgba(34,145,79,.18);border-radius:var(--r);padding:15px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow2);}
+.gci h3{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--g2);}
+.gci p{font-size:11px;color:var(--muted);margin-top:2px;}
+.gp{height:5px;background:rgba(34,145,79,.15);border-radius:3px;margin-top:7px;width:150px;}
+.gpf{height:100%;background:linear-gradient(90deg,var(--g3),var(--g5));border-radius:3px;}
+.bfocus{background:linear-gradient(135deg,var(--g2),var(--g4));color:white;border:none;border-radius:12px;padding:11px 13px;font-size:11px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-align:center;line-height:1.4;box-shadow:0 4px 16px rgba(10,46,26,.3);transition:transform .15s;}
+.bfocus:active{transform:scale(.94);}
+
+/* SUBJECTS */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sc{background:var(--glass);border:1px solid rgba(255,255,255,.9);border-radius:16px;padding:13px 12px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow2);position:relative;overflow:hidden;}
+.sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g3),var(--g5));transform:scaleX(0);transform-origin:left;transition:transform .2s;}
+.sc:active::after{transform:scaleX(1);}
+.sc:active{transform:scale(.97);}
+.si{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:8px;}
+.sc h4{font-size:13px;font-weight:700;color:var(--text);}
+.sc .tc{font-size:10px;color:var(--muted);margin-top:1px;}
+.pb{height:4px;background:rgba(34,145,79,.1);border-radius:2px;margin-top:8px;}
+.pf{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--g3),var(--g5));}
+.pl{font-size:10px;color:var(--g3);font-weight:700;margin-top:3px;}
+
+/* BOOKS */
+.br{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;}
+.br::-webkit-scrollbar{display:none;}
+.bi{flex-shrink:0;width:108px;text-align:center;}
+.bcov{width:108px;height:138px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;padding:10px;line-height:1.4;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.17);margin-bottom:6px;position:relative;overflow:hidden;}
+.bcov::after{content:'';position:absolute;top:0;left:0;width:30%;height:100%;background:rgba(255,255,255,.1);}
+.bi .bt{font-size:11px;font-weight:700;color:var(--text);}
+.bi .bs{font-size:10px;color:var(--muted);}
+.brd{display:inline-block;background:linear-gradient(135deg,var(--g3),var(--g5));color:white;border:none;border-radius:8px;padding:6px 12px;font-size:10px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:5px;box-shadow:0 3px 10px rgba(10,46,26,.18);}
+
+/* ALERTS */
+.ai{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(34,145,79,.07);}
+.ai:last-child{border:none;}
+.ad{width:7px;height:7px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+.at h4{font-size:12px;font-weight:600;color:var(--text);}
+.at p{font-size:10px;color:var(--muted);margin-top:1px;}
+
+/* GPA */
+.gpab{text-align:center;padding:6px 0;}
+.gpan{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:var(--g2);line-height:1;}
+.gpas{font-size:12px;color:var(--muted);margin-top:4px;}
+.pr{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(34,145,79,.07);}
+.pr:last-child{border:none;}
+.prr{font-size:13px;width:22px;}
+.prav{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--g3),var(--g5));display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:800;}
+.prn{flex:1;font-size:12px;font-weight:600;}
+.prs{font-size:13px;font-weight:800;color:var(--g3);}
+
+/* TABS */
+.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.tab{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid rgba(34,145,79,.15);background:var(--glass);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;color:var(--muted);box-shadow:var(--shadow2);}
+.tab.active{background:linear-gradient(135deg,var(--g2),var(--g4));color:white;border-color:transparent;box-shadow:0 4px 14px rgba(10,46,26,.22);}
+
+/* TIMER */
+.tc{background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 60%,var(--g3) 100%);border-radius:var(--r);padding:24px 20px;text-align:center;margin-bottom:14px;box-shadow:0 10px 36px rgba(10,46,26,.3);position:relative;overflow:hidden;}
+.tc::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(201,168,76,.06);}
+.tn{font-family:'Syne',sans-serif;font-size:76px;font-weight:800;color:white;line-height:1;}
+.tl{font-size:11px;color:rgba(255,255,255,.45);margin-top:4px;letter-spacing:2px;text-transform:uppercase;}
+.tbs{display:flex;justify-content:center;gap:14px;margin-top:20px;}
+.tb{width:54px;height:54px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .15s;}
+.tb:active{transform:scale(.9);}
+.tbp{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--g1);box-shadow:0 6px 20px rgba(201,168,76,.42);}
+.tbs2{background:rgba(255,255,255,.12);color:white;}
+.sr{display:flex;gap:10px;margin-bottom:14px;}
+.sb{flex:1;background:var(--glass);border:1px solid rgba(255,255,255,.85);border-radius:14px;padding:14px 10px;text-align:center;box-shadow:var(--shadow2);}
+.sv{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--g2);}
+.sk{font-size:10px;color:var(--muted);margin-top:2px;}
+.sndl{display:flex;gap:8px;flex-wrap:wrap;}
+.sndc{display:flex;align-items:center;gap:6px;background:var(--glass);border:1.5px solid rgba(34,145,79,.15);border-radius:20px;padding:7px 13px;font-size:11px;font-weight:600;color:var(--g2);cursor:pointer;transition:all .2s;box-shadow:var(--shadow2);}
+.sndc.active{background:linear-gradient(135deg,var(--g2),var(--g4));color:white;border-color:transparent;box-shadow:0 4px 14px rgba(10,46,26,.22);}
+
+/* NOTES */
+.nc{background:var(--glass);border:1px solid rgba(255,255,255,.9);border-radius:var(--r);padding:14px;margin-bottom:10px;border-left:3.5px solid var(--g4);box-shadow:var(--shadow2);}
+.nc h4{font-size:13px;font-weight:700;}
+.nm{font-size:10px;color:var(--muted);margin-top:2px;}
+.np{font-size:12px;color:#444;margin-top:8px;line-height:1.6;}
+.nbs{display:flex;gap:8px;margin-top:10px;}
+.nb{background:rgba(34,145,79,.09);color:var(--g3);border:1.5px solid rgba(34,145,79,.18);border-radius:9px;padding:7px 13px;font-size:11px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;}
+.nbp{background:linear-gradient(135deg,var(--g3),var(--g5));color:white;border-color:transparent;box-shadow:0 4px 12px rgba(10,46,26,.18);}
+.lb{display:inline-flex;align-items:center;gap:5px;background:#e74c3c;color:white;border-radius:20px;padding:3px 10px;font-size:10px;font-weight:700;}
+.ld{width:6px;height:6px;border-radius:50%;background:white;animation:p 1s infinite;}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+.ait{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.aib{background:linear-gradient(135deg,var(--g2),var(--g4));color:white;border:none;border-radius:13px;padding:15px 12px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;box-shadow:0 5px 18px rgba(10,46,26,.25);transition:transform .15s;}
+.aib:active{transform:scale(.95);}
+
+/* ID CARD */
+.idc{background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 50%,var(--g3) 100%);border-radius:22px;padding:20px;color:white;position:relative;overflow:hidden;margin-bottom:14px;box-shadow:0 12px 40px rgba(10,46,26,.35);}
+.idc::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(201,168,76,.07);}
+.idc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.idct{display:flex;align-items:center;gap:14px;position:relative;z-index:1;}
+.idcp{width:66px;height:66px;border-radius:16px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:30px;border:2.5px solid rgba(201,168,76,.45);}
+.idcd h2{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;}
+.idcd p{font-size:10px;opacity:.62;margin-top:2px;}
+.idcn{font-family:monospace;font-size:12px;opacity:.85;margin-top:4px;letter-spacing:1px;}
+.idcv{display:inline-flex;align-items:center;gap:7px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);border-radius:20px;padding:5px 13px;font-size:11px;font-weight:700;color:var(--gold2);margin-top:13px;position:relative;z-index:1;}
+.idca{display:flex;gap:9px;margin-top:13px;position:relative;z-index:1;}
+.idcab{flex:1;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;padding:10px;font-size:11px;font-weight:700;color:white;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+.li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(34,145,79,.07);}
+.li:last-child{border:none;}
+.lio{font-size:20px;}
+.lii h4{font-size:12px;font-weight:700;}
+.lii p{font-size:10px;color:var(--g3);font-weight:600;margin-top:1px;}
+
+/* CAREER */
+.ccard{background:var(--glass);border:1px solid rgba(255,255,255,.88);border-radius:var(--r);padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:var(--shadow2);transition:all .2s;}
+.ccard:active{transform:scale(.98);}
+.ci2{font-size:30px;}
+.cai h4{font-size:14px;font-weight:700;}
+.cai p{font-size:11px;color:var(--muted);margin-top:2px;}
+.caa{margin-left:auto;color:var(--g3);font-size:18px;font-weight:700;}
+.rd{text-align:center;padding:8px 0;}
+.rdn{font-family:'Syne',sans-serif;font-size:50px;font-weight:800;color:var(--g2);line-height:1;}
+.rdl{font-size:12px;color:var(--muted);margin-top:4px;}
+.rb{height:10px;background:rgba(34,145,79,.1);border-radius:5px;margin:10px 0;overflow:hidden;}
+.rf{height:100%;border-radius:5px;background:linear-gradient(90deg,#f39c12,#27ae60);width:75%;}
+.skit{margin-bottom:10px;}
+.skit .skt{display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:4px;}
+.skit .skv{color:var(--g3);}
+.skbg{height:6px;background:rgba(34,145,79,.1);border-radius:3px;}
+.skf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--g3),var(--g5));}
+
+/* SETTINGS */
+.pfc{background:linear-gradient(120deg,#e8f5ee,#d4eddf);border:1px solid rgba(34,145,79,.13);border-radius:var(--r);padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:14px;box-shadow:var(--shadow2);}
+.pfav{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,var(--g3),var(--g5));display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:26px;border:2.5px solid rgba(201,168,76,.38);}
+.pfd h2{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--text);}
+.pfd .sch{font-size:11px;color:var(--g3);font-weight:600;margin-top:1px;}
+.pfd p{font-size:10px;color:var(--muted);}
+.ss{margin-bottom:14px;}
+.ss h3{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;}
+.sit{display:flex;align-items:center;background:var(--glass);border:1px solid rgba(255,255,255,.88);border-radius:13px;padding:13px 14px;margin-bottom:5px;cursor:pointer;box-shadow:var(--shadow2);}
+.sit:active{background:var(--cream2);}
+.sio{font-size:17px;margin-right:12px;}
+.sil{flex:1;font-size:13px;font-weight:600;color:var(--text);}
+.siv{font-size:11px;color:var(--muted);}
+.sia{color:var(--muted);font-size:14px;margin-left:6px;}
+.tgl{width:44px;height:24px;background:var(--g3);border-radius:12px;position:relative;cursor:pointer;transition:background .2s;}
+.tgl::after{content:'';position:absolute;width:18px;height:18px;background:white;border-radius:50%;top:3px;right:3px;transition:right .2s;box-shadow:0 2px 6px rgba(0,0,0,.18);}
+.tgl.off{background:rgba(34,145,79,.18);}
+.tgl.off::after{right:calc(100% - 21px);}
+.lor{display:flex;align-items:center;justify-content:space-between;background:rgba(231,76,60,.06);border:1.5px solid rgba(231,76,60,.14);border-radius:13px;padding:13px 14px;cursor:pointer;}
+.lor:active{background:rgba(231,76,60,.12);}
+.lor span{font-size:13px;font-weight:700;color:#e74c3c;}
+
+/* CHIP */
+.chip{display:inline-flex;align-items:center;background:rgba(34,145,79,.1);color:var(--g2);border-radius:20px;padding:4px 10px;font-size:10px;font-weight:600;margin-right:5px;margin-bottom:5px;}
+.chipo{background:rgba(243,156,18,.1);color:#c87f0a;}
+
+/* WORKSHOP */
+.wi{display:flex;align-items:center;gap:12px;padding:11px;background:rgba(34,145,79,.06);border-radius:12px;margin-bottom:8px;border:1px solid rgba(34,145,79,.1);}
+.wi h4{font-size:12px;font-weight:700;}
+.wi p{font-size:10px;color:var(--muted);}
+
+/* AI BUBBLE */
+.aibub{position:fixed;bottom:calc(var(--nav) + 14px);right:16px;z-index:200;}
+.aibubb{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--g3));border:2px solid rgba(201,168,76,.42);cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(10,46,26,.38);transition:transform .2s;}
+.aibubb:active{transform:scale(.9);}
+.aicb{position:absolute;bottom:62px;right:0;width:248px;background:#0d2218;border-radius:18px 18px 4px 18px;padding:14px;display:none;box-shadow:0 12px 48px rgba(0,0,0,.32);border:1px solid rgba(201,168,76,.18);}
+.aicb.open{display:block;}
+.aich{color:var(--gold2);font-size:12px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.aiir{display:flex;gap:8px;background:rgba(255,255,255,.08);border-radius:12px;padding:8px 12px;align-items:center;}
+.aiir input{flex:1;background:none;border:none;color:white;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;}
+.aiir input::placeholder{color:rgba(255,255,255,.28);}
+.ais{background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:8px;width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;color:var(--g1);font-weight:700;}
+
+/* PAGE HEADER */
+.pgh{margin-bottom:16px;}
+.pgh h1{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;color:var(--text);line-height:1.2;}
+.pgh p{font-size:12px;color:var(--muted);margin-top:3px;}
+
+/* TOAST */
+#toast{position:fixed;bottom:calc(var(--nav) + 14px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--g1);color:white;padding:10px 20px;border-radius:14px;font-size:12px;font-weight:600;opacity:0;transition:all .3s;z-index:999;pointer-events:none;white-space:nowrap;border:1px solid rgba(201,168,76,.22);box-shadow:0 8px 24px rgba(0,0,0,.28);}
+</style>
+</head>
+<body>
+
+<!-- ════════ LOGIN ════════ -->
+<div id="ls" class="screen active">
+  <div class="lbg"></div>
+  <div class="ltop">
+    <img class="ltop-logo" src="https://gooo26.github.io/Siksha-Flow/IMG_20260505_194310.png" alt="Logo" onerror="this.style.display='none'">
+    <div class="ltop-brand">Siksha-Flow</div>
+    <div class="ltop-tag">AI-Powered Universal Learning Ecosystem</div>
+  </div>
+  <div class="lstudents">
+    <img src="https://gooo26.github.io/Siksha-Flow/cover_adfec2f98c5418cdf818bc4cfba4c307.webp" alt="Students" onerror="this.style.display='none'">
+  </div>
+  <div class="lcard">
+    <div class="lcard-t">Welcome Back 👋</div>
+    <div class="lcard-s">Login to your Virtual Bag</div>
+    <div class="ig">
+      <label>Username / Unified Student ID (USID)</label>
+      <div class="iw"><span class="ii">👤</span><input type="text" placeholder="SF-XXXX-XXXX-XXXX" id="lu"></div>
+    </div>
+    <div class="ig">
+      <label>Password</label>
+      <div class="iw"><span class="ii">🔒</span><input type="password" placeholder="Enter your password" id="lp"></div>
+    </div>
+    <button class="btnm" onclick="doLogin()">🔊 &nbsp;Log In to Virtual Bag</button>
+    <div class="div-or"><span>or continue with</span></div>
+    <div class="sso-g">
+      <button class="ssob" onclick="doLogin()"><span class="si">🎓</span>School Account</button>
+      <button class="ssob" onclick="doLogin()"><span class="si">🏛️</span>State Board ID</button>
+      <button class="ssob ssof" onclick="doLogin()"><span class="si">🆔</span>Government ID Login</button>
+      <div class="ibmr" onclick="doLogin()">🔒 IBM Secured &amp; Verifiable (Unified Profile)</div>
+    </div>
+    <div class="lfoot">New Student? <a href="#">Register Now</a> &nbsp;·&nbsp; <a href="#">User Guide</a></div>
+  </div>
+</div>
+
+<!-- ════════ APP ════════ -->
+<div id="as" class="screen">
+  <header class="ahdr">
+    <div class="ahl">
+      <img src="https://gooo26.github.io/Siksha-Flow/IMG_20260505_194310.png" alt="Logo" onerror="this.style.background='var(--g3)'">
+      <span>Siksha-Flow</span>
+    </div>
+    <div class="ahr">
+      <button class="hbtn" onclick="showToast('📋 3 new alerts!')">🔔<span class="ndot"></span></button>
+      <div class="hav" onclick="goPage('settings')">R</div>
+    </div>
+  </header>
+
+  <div class="ac">
+
+    <!-- HOME -->
+    <div id="page-home" class="page active">
+      <div class="gc">
+        <div class="gci">
+          <h3>📅 Today's Study Goal</h3>
+          <div class="gp"><div class="gpf" style="width:75%"></div></div>
+          <p>Science: Chapter 4 &nbsp;·&nbsp; 75% Complete</p>
+        </div>
+        <button class="bfocus" onclick="goPage('focus')">⏱<br>Focus<br>Mode</button>
+      </div>
+      <div class="hb">
+        <div class="hbt">
+          <div class="hbav">R</div>
+          <div class="hbi">
+            <h3>Rahul K. Sharma</h3>
+            <p>SF7483-9210-4567 · Blockchain ID</p>
+          </div>
+          <div style="margin-left:auto;text-align:right;">
+            <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--gold2);">3.8</div>
+            <div style="font-size:9px;color:rgba(255,255,255,.45);">GPA/4.0</div>
+          </div>
+        </div>
+        <div class="hbbadges">
+          <span class="hbadge"><span class="ico">⭐</span>Science Star</span>
+          <span class="hbadge"><span class="ico">✅</span>100 Days</span>
+          <span class="hbadge"><span class="ico">🏅</span>Grade 8</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chd">Active Classes <span class="va" onclick="goPage('classes')">View All →</span></div>
+        <div class="sg">
+          <div class="sc" onclick="goPage('classes')"><div class="si" style="background:#e8f4fd;">🔢</div><h4>Maths</h4><div class="tc">Ms. Priya</div><div class="pb"><div class="pf" style="width:75%"></div></div><div class="pl">75%</div></div>
+          <div class="sc" onclick="goPage('classes')"><div class="si" style="background:#e8f7ef;">🔬</div><h4>Science</h4><div class="tc">Mr. Sharma</div><div class="pb"><div class="pf" style="width:75%"></div></div><div class="pl">75%</div></div>
+          <div class="sc" onclick="goPage('classes')"><div class="si" style="background:#fef9e7;">🇮🇳</div><h4>Hindi</h4><div class="tc">Ms. Parma</div><div class="pb"><div class="pf" style="width:60%"></div></div><div class="pl">60%</div></div>
+          <div class="sc" onclick="goPage('classes')"><div class="si" style="background:#fdf2f8;">🌐</div><h4>English</h4><div class="tc">Mr. Toma</div><div class="pb"><div class="pf" style="width:70%"></div></div><div class="pl">70%</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chd">My E-Books 📚 <span class="va" onclick="goPage('ebooks')">View All →</span></div>
+        <div class="br">
+          <div class="bi"><div class="bcov" style="background:linear-gradient(145deg,#134d2e,#22914f);">Science<br>Grade 8<br>NCERT</div><div class="bt">NCERT Sci</div><button class="brd">Read Now</button></div>
+          <div class="bi"><div class="bcov" style="background:linear-gradient(145deg,#1565c0,#1e88e5);">Mathematics<br>Grade 8</div><div class="bt">Mathematics</div><button class="brd">Read Now</button></div>
+          <div class="bi"><div class="bcov" style="background:linear-gradient(145deg,#6a1b9a,#ab47bc);">History<br>Our Pasts</div><div class="bt">History</div><button class="brd">Read Now</button></div>
+          <div class="bi"><div class="bcov" style="background:linear-gradient(145deg,#bf360c,#ef6c00);">Hindi<br>Vasant</div><div class="bt">Hindi</div><button class="brd">Read Now</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chd">🔔 Alerts &amp; Notices</div>
+        <div class="ai"><div class="ad" style="background:#e74c3c"></div><div class="at"><h4>Science Project due: Friday</h4><p>28 hours ago</p></div></div>
+        <div class="ai"><div class="ad" style="background:#f39c12"></div><div class="at"><h4>Maths Quiz: Chapter 5 tomorrow</h4><p>2 hours ago</p></div></div>
+        <div class="ai"><div class="ad" style="background:var(--g4)"></div><div class="at"><h4>New E-Book added: Biology</h4><p>Today</p></div></div>
+      </div>
+    </div>
+
+    <!-- CLASSES -->
+    <div id="page-classes" class="page">
+      <div class="pgh"><h1>My Classes 🎓</h1><p>Academic Session 2024-25</p></div>
+      <div class="card">
+        <div class="chd">Performance Dashboard</div>
+        <div class="gpab"><div class="gpan">3.8</div><div class="gpas">Overall GPA / 4.0</div></div>
+        <div style="margin-top:12px;">
+          <div class="pr"><div class="prr">🥇</div><div class="prav">M</div><div class="prn">Meera S.</div><div class="prs">3.95</div></div>
+          <div class="pr"><div class="prr">🥈</div><div class="prav" style="background:linear-gradient(135deg,var(--g3),var(--g5))">R</div><div class="prn">Rahul K. <span style="font-size:10px;color:var(--g3);">(You)</span></div><div class="prs">3.80</div></div>
+          <div class="pr"><div class="prr">🥉</div><div class="prav" style="background:linear-gradient(135deg,#e67e22,#d35400)">A</div><div class="prn">Aarav M.</div><div class="prs">3.72</div></div>
+        </div>
+      </div>
+      <div class="tabs"><button class="tab active" onclick="atab(this)">All</button><button class="tab" onclick="atab(this)">Core</button><button class="tab" onclick="atab(this)">Elective</button><button class="tab" onclick="atab(this)">Completed</button></div>
+      <div class="sg">
+        <div class="sc"><div class="si" style="background:#e8f4fd;">🔢</div><h4>Maths</h4><div class="tc">Ms. Priya</div><div class="pb"><div class="pf" style="width:75%"></div></div><div class="pl">75%</div></div>
+        <div class="sc"><div class="si" style="background:#e8f7ef;">🔬</div><h4>Science</h4><div class="tc">Mr. Sharma</div><div class="pb"><div class="pf" style="width:75%"></div></div><div class="pl">75%</div></div>
+        <div class="sc"><div class="si" style="background:#fef9e7;">🇮🇳</div><h4>Hindi</h4><div class="tc">Ms. Padma</div><div class="pb"><div class="pf" style="width:60%"></div></div><div class="pl">60%</div></div>
+        <div class="sc"><div class="si" style="background:#fdf2f8;">🌐</div><h4>English</h4><div class="tc">Mr. Toma</div><div class="pb"><div class="pf" style="width:70%"></div></div><div class="pl">70%</div></div>
+        <div class="sc"><div class="si" style="background:#f5f0ff;">🌍</div><h4>Social</h4><div class="tc">Mr. Singh</div><div class="pb"><div class="pf" style="width:65%"></div></div><div class="pl">65%</div></div>
+        <div class="sc"><div class="si" style="background:#e8f7ef;">💻</div><h4>Comp. Sci.</h4><div class="tc">Mr. Das</div><div class="pb"><div class="pf" style="width:90%"></div></div><div class="pl">Lab Done</div></div>
+        <div class="sc"><div class="si" style="background:#fdf2f8;">🎨</div><h4>Art</h4><div class="tc">Ms. Rao</div><div class="pb"><div class="pf" style="width:55%"></div></div><div class="pl">Portfolio</div></div>
+        <div class="sc"><div class="si" style="background:#fef9e7;">🏃</div><h4>Phys. Ed.</h4><div class="tc">Mr. Khan</div><div class="pb"><div class="pf" style="width:80%"></div></div><div class="pl">80% Att.</div></div>
+      </div>
+      <div class="card">
+        <div class="chd">🤖 AI Recommendations</div>
+        <div class="ai"><div class="ad" style="background:var(--g4)"></div><div class="at"><h4>Focus on Chapter 4 Science review</h4><p>Based on quiz scores</p></div></div>
+        <div class="ai"><div class="ad" style="background:#f39c12"></div><div class="at"><h4>Hindi Assignment incomplete — Submit by Friday</h4></div></div>
+      </div>
+    </div>
+
+    <!-- EBOOKS -->
+    <div id="page-ebooks" class="page">
+      <div class="pgh"><h1>Digital Library 📚</h1><p>All your books in one place</p></div>
+      <div style="display:flex;gap:8px;background:var(--glass);border-radius:14px;padding:11px 14px;border:1px solid rgba(255,255,255,.88);box-shadow:var(--shadow2);margin-bottom:14px;">
+        <span>🔍</span><input type="text" placeholder="Search books, chapters..." style="flex:1;border:none;background:transparent;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;color:var(--text);">
+      </div>
+      <div class="tabs"><button class="tab active" onclick="atab(this)">All Grade 8</button><button class="tab" onclick="atab(this)">NCERT</button><button class="tab" onclick="atab(this)">State Board</button><button class="tab" onclick="atab(this)">Reference</button></div>
+      <div class="br" style="margin-bottom:16px;">
+        <div class="bi"><div class="bcov" style="background:linear-gradient(145deg,#134d2e,#22914f);">Science<br>Ch.4: Light</div><div class="bt">Science Ch.4</div><div style="font-size:10px;color:var(--g3);font-weight:700;">75%</div><button class="brd">Read</button></div>
+        <div class="bi"><div class="bcov" style="background:linear-gradient(145deg,#1565c0,#1e88e5);">Mathematics<br>Grade 8</div><div class="bt">Mathematics</div><div style="font-size:10px;color:var(--g3);font-weight:700;">55%</div><button class="brd">Read</button></div>
+        <div class="bi"><div class="bcov" style="background:linear-gradient(145deg,#6a1b9a,#ab47bc);">Biology<br>Cell Structure</div><div class="bt">Biology</div><div style="font-size:10px;color:var(--g3);font-weight:700;">77%</div><button class="brd">Read</button></div>
+        <div class="bi"><div class="bcov" style="background:linear-gradient(145deg,#bf360c,#ef6c00);">History<br>Our Pasts</div><div class="bt">History</div><div style="font-size:10px;color:var(--g3);font-weight:700;">68%</div><button class="brd">Read</button></div>
+      </div>
+      <div class="card">
+        <div class="chd">📌 Recent Reads</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:10px;background:rgba(34,145,79,.06);border-radius:12px;border:1px solid rgba(34,145,79,.1);">
+            <div style="width:40px;height:50px;border-radius:8px;background:linear-gradient(145deg,#134d2e,#22914f);display:flex;align-items:center;justify-content:center;font-size:10px;color:white;font-weight:700;">Sci</div>
+            <div><div style="font-size:12px;font-weight:700;">Science - Chapter 4: Light</div><div style="font-size:10px;color:var(--muted);">Ms. Sharma · 75%</div></div>
+            <button class="brd" style="margin-left:auto;">Read</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px;background:rgba(34,145,79,.06);border-radius:12px;border:1px solid rgba(34,145,79,.1);">
+            <div style="width:40px;height:50px;border-radius:8px;background:linear-gradient(145deg,#1565c0,#1e88e5);display:flex;align-items:center;justify-content:center;font-size:10px;color:white;font-weight:700;">Math</div>
+            <div><div style="font-size:12px;font-weight:700;">Mathematics - Grade 8</div><div style="font-size:10px;color:var(--muted);">Ms. Sharma · 55%</div></div>
+            <button class="brd" style="margin-left:auto;">Read</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div id="page-notes" class="page">
+      <div class="pgh"><h1>Smart Notes ✏️</h1><p>AI-powered real-time class notes</p></div>
+      <div class="tabs"><button class="tab active" onclick="atab(this)">All</button><button class="tab" onclick="atab(this)">Maths</button><button class="tab" onclick="atab(this)">Science</button><button class="tab" onclick="atab(this)">Hindi</button></div>
+      <div class="card" style="border:1.5px solid rgba(231,76,60,.18);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div class="chd" style="margin:0;">Live Class Intake</div>
+          <span class="lb"><span class="ld"></span>LIVE</span>
+        </div>
+        <div style="background:rgba(34,145,79,.06);border-radius:11px;padding:12px;font-size:12px;line-height:1.65;color:var(--text);border:1.5px dashed rgba(34,145,79,.18);">Ms. Sharma's handwriting is being instantly converted into clean digital text in real-time... ✨</div>
+      </div>
+      <div class="card">
+        <div class="chd">🤖 AI Note Assistant</div>
+        <div class="ait">
+          <button class="aib" onclick="aiAction('Summarizing notes...')">📝 Summarize<br>Recent Notes</button>
+          <button class="aib" onclick="aiAction('Creating quiz...')">🧠 Create AI<br>Quiz from Notes</button>
+        </div>
+      </div>
+      <div class="nc"><h4>Science — Ms. Sharma | Chapter 4: Light</h4><div class="nm">1 hr ago</div><div class="np">Chapter 4: Light, reflection & refraction. Key terms: Ray diagram, Incident ray, Reflection, Electronic changes...</div><div class="nbs"><button class="nb nbp">View Full Note</button><button class="nb" onclick="aiAction('AI editing...')">🤖 AI Edit</button></div></div>
+      <div class="nc" style="border-left-color:#f39c12;"><h4>Maths — Ms. Priya | Quadratic Equations</h4><div class="nm">3 hrs ago</div><div class="np">Quadratic: ax² + bx + c = 0. Formula: x = (−b ± √(b²−4ac)) / 2a. Worked examples from class...</div><div class="nbs"><button class="nb nbp">View Full Note</button><button class="nb">🤖 AI Edit</button></div></div>
+      <div class="card">
+        <div class="chd">📊 Note Insights</div>
+        <div class="ai"><div class="ad" style="background:#e74c3c"></div><div class="at"><h4>Chapter 4 is complex — review Science notes</h4></div></div>
+        <div class="ai"><div class="ad" style="background:#f39c12"></div><div class="at"><h4>Focus on Chapter 4.5's Science Equations</h4></div></div>
+        <div class="ai"><div class="ad" style="background:var(--g4)"></div><div class="at"><h4>Maths quiz prep needed</h4></div></div>
+      </div>
+    </div>
+
+    <!-- FOCUS -->
+    <div id="page-focus" class="page">
+      <div class="pgh"><h1>Focus Mode ⏱</h1><p>Block distractions. Achieve more.</p></div>
+      <div class="sr">
+        <div class="sb"><div class="sv">3</div><div class="sk">Sessions</div></div>
+        <div class="sb"><div class="sv">2.5h</div><div class="sk">Focus Time</div></div>
+        <div class="sb"><div class="sv">8.5</div><div class="sk">Focus Score</div></div>
+      </div>
+      <div class="tc">
+        <div class="tn" id="tdisplay">45:00</div>
+        <div class="tl">Minutes — Focus Active</div>
+        <div class="tbs">
+          <button class="tb tbs2" onclick="resetTimer()">↺</button>
+          <button class="tb tbp" id="tbtn" onclick="toggleTimer()">▶</button>
+          <button class="tb tbs2" onclick="addTime()">+5</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chd">📋 Task &amp; Goals</div>
+        <div style="background:rgba(34,145,79,.07);border-radius:12px;padding:13px;border-left:3px solid var(--g4);">
+          <div style="font-size:12px;font-weight:700;margin-bottom:6px;">Primary Goal</div>
+          <div style="font-size:12px;line-height:1.6;">Topic: <b>Science - Chapter 4: Light</b><br>Tasks: Review Smart Notes, Complete Quiz 4.2<br><span style="color:var(--g3);font-weight:700;">Target: 100% ✓</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chd">🎵 Ambient Sound</div>
+        <div class="sndl">
+          <div class="sndc active" onclick="tsound(this)">🌊 White Noise</div>
+          <div class="sndc" onclick="tsound(this)">🌧 Rainfall</div>
+          <div class="sndc" onclick="tsound(this)">📚 Library</div>
+          <div class="sndc" onclick="tsound(this)">🌿 Forest</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chd">📅 Breaks &amp; Focus Boosters</div>
+        <div style="display:flex;gap:10px;margin-bottom:12px;">
+          <div style="flex:1;background:rgba(34,145,79,.07);border-radius:13px;padding:12px;text-align:center;border:1px solid rgba(34,145,79,.1);"><div style="font-size:11px;font-weight:700;color:var(--g2);">Break 1 (5 min)</div><div style="font-size:22px;margin:6px 0;">🧘</div><div style="font-size:10px;color:var(--muted);">Stretch</div><div style="font-size:10px;font-weight:700;color:var(--g3);">in 25 mins</div></div>
+          <div style="flex:1;background:rgba(201,168,76,.07);border-radius:13px;padding:12px;text-align:center;border:1px solid rgba(201,168,76,.13);"><div style="font-size:11px;font-weight:700;color:var(--g2);">Break 2 (10 min)</div><div style="font-size:22px;margin:6px 0;">☕</div><div style="font-size:10px;color:var(--muted);">Tea Break</div><div style="font-size:10px;font-weight:700;color:var(--g3);">in 50 mins</div></div>
+        </div>
+        <div style="background:rgba(34,145,79,.07);border-radius:11px;padding:11px;border:1px solid rgba(34,145,79,.1);">
+          <div style="font-size:11px;font-weight:700;color:var(--g2);margin-bottom:6px;">💡 AI Tips</div>
+          <div style="font-size:11px;line-height:1.8;">✓ Close other browser tabs<br>✓ Place phone in a drawer<br>✓ Use noise-cancelling earphones</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- USID -->
+    <div id="page-usid" class="page">
+      <div class="pgh"><h1>Student ID (USID) 🪪</h1><p>Your Digital Student Passport</p></div>
+      <div class="idc">
+        <div class="idct">
+          <div class="idcp">R</div>
+          <div class="idcd">
+            <h2>Rahul Sharma</h2>
+            <p>Ahmedabad International School</p>
+            <p>Grade: 8 · DOB: 19 May 2020</p>
+            <div class="idcn">SF7483-9210-4567</div>
+          </div>
+        </div>
+        <div class="idcv">✅ Blockchain Verified · 2023-10:46:58 UTC</div>
+        <div class="idca">
+          <button class="idcab">⬇ Download ID</button>
+          <button class="idcab" onclick="copyUSID()">📋 Copy USID</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chd">🏆 Achievements &amp; Badges</div>
+        <div style="display:flex;gap:12px;justify-content:center;padding:8px 0;flex-wrap:wrap;">
+          <div style="text-align:center;"><div style="font-size:38px;">🔬</div><div style="font-size:10px;font-weight:700;margin-top:4px;">Science<br>Olympiad</div></div>
+          <div style="text-align:center;"><div style="font-size:38px;">🏆</div><div style="font-size:10px;font-weight:700;margin-top:4px;">Grade 8<br>Top Scorer</div></div>
+          <div style="text-align:center;"><div style="font-size:38px;">✅</div><div style="font-size:10px;font-weight:700;margin-top:4px;">100 Days<br>Attendance</div></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:10px;">
+          <div style="flex:1;text-align:center;background:rgba(34,145,79,.07);border-radius:13px;padding:13px;border:1px solid rgba(34,145,79,.1);"><div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--g2);">8.8</div><div style="font-size:10px;color:var(--muted);">Notes Mastery</div></div>
+          <div style="flex:1;text-align:center;background:rgba(201,168,76,.07);border-radius:13px;padding:13px;border:1px solid rgba(201,168,76,.12);"><div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--gold);">8.1</div><div style="font-size:10px;color:var(--muted);">Resume Strength</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chd">🔗 Linked Accounts</div>
+        <div class="li"><div class="lio">📚</div><div class="lii"><h4>NCERT E-Books (Grade 8)</h4><p>linked ✓</p></div></div>
+        <div class="li"><div class="lio">🏫</div><div class="lii"><h4>School Management System</h4><p>linked ✓</p></div></div>
+        <div class="li"><div class="lio">🏛️</div><div class="lii"><h4>State Board Records</h4><p>linked ✓</p></div></div>
+        <div class="li"><div class="lio">🤖</div><div class="lii"><h4>AI Career Profile</h4><p>linked ✓</p></div></div>
+      </div>
+      <div class="card">
+        <div class="chd">📄 Linked Documents</div>
+        <div class="li"><div class="lio">📋</div><div class="lii"><h4>Current Grade Sheet</h4><p>Tap to view</p></div></div>
+        <div class="li"><div class="lio">🏅</div><div class="lii"><h4>Achievement Certificates</h4><p>Tap to view</p></div></div>
+        <div class="li"><div class="lio">📁</div><div class="lii"><h4>Co-curricular Records</h4><p>Tap to view</p></div></div>
+      </div>
+    </div>
+
+    <!-- CAREER -->
+    <div id="page-career" class="page">
+      <div class="pgh"><h1>Career Hub 🚀</h1><p>AI-powered career assessment</p></div>
+      <div class="card">
+        <div class="chd">Career Readiness Score</div>
+        <div class="rd"><div class="rdn">7.5</div><div class="rdl">/ 10 · USID Integration Active</div><div class="rb"><div class="rf"></div></div><div style="font-size:11px;color:var(--muted);">Focus on co-curricular to improve!</div></div>
+      </div>
+      <div class="card">
+        <div class="chd">🤖 AI Career Assessment</div>
+        <div style="background:rgba(34,145,79,.07);border-radius:11px;padding:12px;margin-bottom:12px;border:1px solid rgba(34,145,79,.1);">
+          <div style="font-size:12px;font-weight:700;color:var(--g2);margin-bottom:5px;">Key Recommendations</div>
+          <div style="font-size:12px;line-height:1.6;">Strong potential in <b style="color:var(--g3);">STEM</b> based on your USID &amp; Smart Notes. Explore: Coding, Physics.</div>
+        </div>
+        <div class="skit"><div class="skt"><span>Problem Solving</span><span class="skv">85%</span></div><div class="skbg"><div class="skf" style="width:85%"></div></div></div>
+        <div class="skit"><div class="skt"><span>Technology</span><span class="skv">78%</span></div><div class="skbg"><div class="skf" style="width:78%"></div></div></div>
+        <div class="skit"><div class="skt"><span>Creativity</span><span class="skv">72%</span></div><div class="skbg"><div class="skf" style="width:72%"></div></div></div>
+        <div class="skit"><div class="skt"><span>Leadership</span><span class="skv">65%</span></div><div class="skbg"><div class="skf" style="width:65%"></div></div></div>
+      </div>
+      <div class="card">
+        <div class="chd">🗺 Career Path Explorer</div>
+        <div class="ccard" style="border:1.5px solid rgba(34,145,79,.22);background:rgba(34,145,79,.04);"><div class="ci2">📊</div><div class="cai"><h4>Data Scientist</h4><p>Grade 8 → STEM → B.Tech CS → Analyst</p></div><div class="caa">→</div></div>
+        <div class="ccard"><div class="ci2">⚛️</div><div class="cai"><h4>Physicist</h4><p>Science Stream → B.Sc Physics</p></div><div class="caa">→</div></div>
+        <div class="ccard"><div class="ci2">💼</div><div class="cai"><h4>Entrepreneur</h4><p>Build leadership &amp; creativity skills</p></div><div class="caa">→</div></div>
+        <div style="display:flex;gap:9px;margin-top:6px;">
+          <button style="flex:1;background:linear-gradient(135deg,var(--g2),var(--g4));color:white;border:none;border-radius:12px;padding:13px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;box-shadow:0 4px 16px rgba(10,46,26,.22);" onclick="aiAction('Viewing career path...')">View Path</button>
+          <button style="flex:1;background:rgba(34,145,79,.07);color:var(--g2);border:1.5px solid rgba(34,145,79,.18);border-radius:12px;padding:13px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;" onclick="aiAction('Starting quiz...')">Take Quiz</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chd">🎯 Internship &amp; Workshop Board</div>
+        <div class="wi"><div style="font-size:26px;">💻</div><div><h4>Summer Coding Camp</h4><p>Linked with school · Online/Offline</p></div><button class="brd" style="margin-left:auto;">Apply</button></div>
+        <div class="wi"><div style="font-size:26px;">🚀</div><div><h4>Junior Entrepreneurship Workshop</h4><p>Linked with school · Online</p></div><button class="brd" style="margin-left:auto;">Apply</button></div>
+      </div>
+      <div class="card">
+        <div class="chd">🏆 Top Projects</div>
+        <div><span class="chip">🤖 AI Chatbot</span><span class="chip">🚀 Rocket Simulation</span></div>
+        <button style="width:100%;margin-top:12px;background:rgba(34,145,79,.07);color:var(--g2);border:1.5px solid rgba(34,145,79,.18);border-radius:12px;padding:12px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;" onclick="showToast('Opening Portfolio...')">View Full Portfolio →</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="page-settings" class="page">
+      <div class="pgh"><h1>Settings ⚙️</h1><p>Customize your experience</p></div>
+      <div class="pfc">
+        <div class="pfav">R</div>
+        <div class="pfd"><h2>Rahul Sharma</h2><div class="sch">Ahmedabad International School</div><p>Grade: 8 · DOB: 19 May 2020</p><p style="font-family:monospace;font-size:10px;color:var(--g3);">SF7483-9210-4567</p></div>
+      </div>
+      <div class="ss"><h3>App Preferences</h3>
+        <div class="sit"><span class="sio">🌐</span><span class="sil">Language</span><span class="siv">English</span><span class="sia">›</span></div>
+        <div class="sit"><span class="sio">🎨</span><span class="sil">Theme</span><span class="siv">Adaptive</span><span class="sia">›</span></div>
+        <div class="sit"><span class="sio">🔔</span><span class="sil">Notifications</span><div class="tgl" onclick="this.classList.toggle('off')"></div></div>
+        <div class="sit"><span class="sio">📶</span><span class="sil">Offline Access</span><div class="tgl off" onclick="this.classList.toggle('off')"></div></div>
+      </div>
+      <div class="ss"><h3>Privacy &amp; Data</h3>
+        <div class="sit"><span class="sio">⛓</span><span class="sil">Blockchain Access Control</span><div class="tgl" onclick="this.classList.toggle('off')"></div></div>
+        <div class="sit"><span class="sio">🔁</span><span class="sil">Data Sharing</span><div class="tgl off" onclick="this.classList.toggle('off')"></div></div>
+        <div class="sit"><span class="sio">📊</span><span class="sil">Personalization Level</span><span class="siv">Normal</span><span class="sia">›</span></div>
+      </div>
+      <div class="ss"><h3>USID &amp; Account</h3>
+        <div class="sit"><span class="sio">🔒</span><span class="sil">Password &amp; Security</span><span class="sia">›</span></div>
+        <div class="sit"><span class="sio">🔗</span><span class="sil">Manage Linked Services</span><span class="sia">›</span></div>
+        <div class="sit"><span class="sio">📞</span><span class="sil">Update Contact Info</span><span class="sia">›</span></div>
+        <div class="sit"><span class="sio">✅</span><span class="sil">Verify Documents</span><span class="sia">›</span></div>
+      </div>
+      <div class="ss"><h3>Help &amp; Support</h3>
+        <div class="sit"><span class="sio">⚠️</span><span class="sil">Report an Issue</span><span class="sia">›</span></div>
+        <div class="sit"><span class="sio">❓</span><span class="sil">FAQs</span><span class="sia">›</span></div>
+        <div class="sit"><span class="sio">📘</span><span class="sil">User Guide</span><span class="sia">›</span></div>
+      </div>
+      <div class="lor" onclick="doLogout()"><span>🚪 &nbsp;Log Out</span><span style="font-size:14px;color:#e74c3c;">›</span></div>
+      <div style="height:10px;"></div>
+    </div>
+
+  </div><!-- /ac -->
+
+  <nav class="bnav">
+    <button class="ni active" onclick="goPage('home')" id="nav-home"><span class="nii">🏠</span><span class="nil">Home</span></button>
+    <button class="ni" onclick="goPage('classes')" id="nav-classes"><span class="nii">🎓</span><span class="nil">Classes</span></button>
+    <button class="ni" onclick="goPage('ebooks')" id="nav-ebooks"><span class="nii">📚</span><span class="nil">E-Books</span></button>
+    <button class="ni" onclick="goPage('notes')" id="nav-notes"><span class="nii">✏️</span><span class="nil">Notes</span></button>
+    <button class="ni" onclick="goPage('career')" id="nav-career"><span class="nii">🚀</span><span class="nil">Career</span></button>
+  </nav>
+</div>
+
+<!-- AI BUBBLE -->
+<div class="aibub" id="aibub" style="display:none;">
+  <div class="aicb" id="aicb">
+    <div class="aich">🤖 Voice Tutor AI</div>
+    <div class="aiir"><input type="text" placeholder="Ask AI anything..." id="aiinp"><button class="ais" onclick="sendAI()">➤</button></div>
+  </div>
+  <button class="aibubb" onclick="toggleAI()">🤖</button>
+</div>
+
+<div id="toast"></div>
+
+<script>
+function doLogin(){document.getElementById('ls').classList.remove('active');document.getElementById('as').classList.add('active');document.getElementById('aibub').style.display='block';showToast('Welcome back, Rahul! 👋');}
+function doLogout(){if(confirm('Logout karein?')){document.getElementById('as').classList.remove('active');document.getElementById('ls').classList.add('active');document.getElementById('aibub').style.display='none';}}
+function goPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.ni').forEach(x=>x.classList.remove('active'));const pg=document.getElementById('page-'+p);if(pg)pg.classList.add('active');const nv=document.getElementById('nav-'+p);if(nv)nv.classList.add('active');document.querySelector('.ac').scrollTop=0;}
+let tsec=45*60,trun=false,tint=null;
+function updT(){const m=String(Math.floor(tsec/60)).padStart(2,'0'),s=String(tsec%60).padStart(2,'0');document.getElementById('tdisplay').textContent=m+':'+s;}
+function toggleTimer(){if(trun){clearInterval(tint);trun=false;document.getElementById('tbtn').textContent='▶';showToast('Paused ⏸');}else{tint=setInterval(()=>{if(tsec>0){tsec--;updT();}else{clearInterval(tint);trun=false;document.getElementById('tbtn').textContent='▶';showToast('Session complete! 🎉');tsec=45*60;updT();}},1000);trun=true;document.getElementById('tbtn').textContent='⏸';showToast('Focus started! 🎯');}}
+function resetTimer(){clearInterval(tint);trun=false;tsec=45*60;updT();document.getElementById('tbtn').textContent='▶';showToast('Timer reset ↺');}
+function addTime(){tsec+=300;updT();showToast('+5 minutes added ⏱');}
+function tsound(el){document.querySelectorAll('.sndc').forEach(c=>c.classList.remove('active'));el.classList.add('active');showToast('Playing: '+el.textContent.trim()+' 🎵');}
+function atab(el){el.closest('.tabs').querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+function toggleAI(){document.getElementById('aicb').classList.toggle('open');}
+function sendAI(){const i=document.getElementById('aiinp');if(i.value.trim()){showToast('🤖 '+i.value.trim());i.value='';document.getElementById('aicb').classList.remove('open');}}
+function aiAction(m){showToast('🤖 '+m);}
+function copyUSID(){navigator.clipboard&&navigator.clipboard.writeText('SF7483-9210-4567');showToast('Copied: SF7483-9210-4567 📋');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(-50%) translateY(16px)';},2600);}
+document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(document.getElementById('ls').classList.contains('active'))doLogin();if(document.getElementById('aicb').classList.contains('open'))sendAI();});
+</script>
+</body>
+</html>
